@@ -20,6 +20,7 @@ import { ChevronDown, Edit, Trash2 } from "react-feather";
 import "../../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 // import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 import { Route } from "react-router-dom";
+import ReactHtmlParser from "react-html-parser";
 
 class termscondition extends React.Component {
   state = {
@@ -52,7 +53,7 @@ class termscondition extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.desc}</span>
+              <span>{ReactHtmlParser(params.data.desc)}</span>
             </div>
           );
         },

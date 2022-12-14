@@ -14,15 +14,14 @@ import {
 import axiosConfig from "../../../../axiosConfig";
 import { ContextLayout } from "../../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
-import ReactHtmlParser from "react-html-parser";
-
 import { Eye, Edit, Trash2, ChevronDown } from "react-feather";
 //import classnames from "classnames";
 import { history } from "../../../../history";
+import ReactHtmlParser from "react-html-parser";
 import "../../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 import "../../../../assets/scss/pages/users.scss";
 import { Route } from "react-router-dom";
-class FaqList extends React.Component {
+class PrivacyPolicyList extends React.Component {
   state = {
     rowData: [],
     paginationPageSize: 20,
@@ -71,8 +70,7 @@ class FaqList extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span> {ReactHtmlParser(params.data.desc)}</span>
-              {/* <span>{params.data.desc}</span> */}
+              <span>{ReactHtmlParser(params.data.desc)}</span>
             </div>
           );
         },
@@ -103,7 +101,7 @@ class FaqList extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
-              {/* <Route
+              <Route
                 render={({ history }) => (
                   <Edit
                     className="mr-50"
@@ -111,12 +109,12 @@ class FaqList extends React.Component {
                     color="blue"
                     onClick={() =>
                       history.push(
-                        `/app/pagesetup/banner/EditBanner/${params.data._id}`
+                        `/app/pagesetup/privacypolicy/editPrivacyPolicy/${params.data._id}`
                       )
                     }
                   />
                 )}
-              /> */}
+              />
 
               <Trash2
                 className="mr-50"
@@ -137,7 +135,7 @@ class FaqList extends React.Component {
 
   async componentDidMount() {
     await axiosConfig
-      .get("admin/faq_list", {
+      .get("/admin/getPrivcyPolicy", {
         // headers: {
         //   "auth-adtoken": localStorage.getItem("auth-adtoken"),
         // },
@@ -150,7 +148,7 @@ class FaqList extends React.Component {
   }
   async runthisfunction(id) {
     console.log(id);
-    await axiosConfig.get(`admin/dltFaq/${id}`).then(
+    await axiosConfig.get(`/admin/dltPrivcyPlcy/${id}`).then(
       (response) => {
         console.log(response);
       },
@@ -195,7 +193,7 @@ class FaqList extends React.Component {
               <Row className="m-2">
                 <Col>
                   <h1 sm="6" className="float-left">
-                    FAQ List
+                    Privacy Policy List
                   </h1>
                 </Col>
                 <Col>
@@ -204,10 +202,12 @@ class FaqList extends React.Component {
                       <Button
                         className="btn btn-success float-right"
                         onClick={() =>
-                          history.push("/app/pagesetup/faq/addFaq")
+                          history.push(
+                            "/app/pagesetup/privacypolicy/addPrivacyPolicy"
+                          )
                         }
                       >
-                        Add FAQ
+                        Add Privacy Policy
                       </Button>
                     )}
                   />
@@ -312,4 +312,4 @@ class FaqList extends React.Component {
     );
   }
 }
-export default FaqList;
+export default PrivacyPolicyList;

@@ -19,6 +19,25 @@ class AddTermsCondition extends React.Component {
     };
   }
 
+  uploadImageCallBack = (file) => {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", "https://api.imgur.com/3/image");
+      xhr.setRequestHeader("Authorization", "Client-ID 7e1c3e366d22aa3");
+      const data = new FormData();
+      data.append("image", file);
+      xhr.send(data);
+      xhr.addEventListener("load", () => {
+        const response = JSON.parse(xhr.responseText);
+        resolve(response);
+      });
+      xhr.addEventListener("error", () => {
+        const error = JSON.parse(xhr.responseText);
+        reject(error);
+      });
+    });
+  };
+
   onEditorStateChange = (editorState) => {
     this.setState({
       editorState,
@@ -84,43 +103,27 @@ class AddTermsCondition extends React.Component {
         <CardBody>
           <Form onSubmit={this.submitHandler}>
             <Col lg="12" md="12" sm="12" className="mb-2">
-              <Label>Description</Label>
+              <Label> Description</Label>
+
+              <br />
+
               <Editor
-                toolbarClassName="demo-toolbar-absolute"
                 wrapperClassName="demo-wrapper"
                 editorClassName="demo-editor"
-                editorState={this.state.editorState}
                 onEditorStateChange={this.onEditorStateChange}
                 toolbar={{
-                  options: ["inline", "blockType", "fontSize", "fontFamily"],
-                  inline: {
-                    options: [
-                      "bold",
-                      "italic",
-                      "underline",
-                      "strikethrough",
-                      "monospace",
-                    ],
-                    bold: { className: "bordered-option-classname" },
-                    italic: { className: "bordered-option-classname" },
-                    underline: { className: "bordered-option-classname" },
-                    strikethrough: {
-                      className: "bordered-option-classname",
-                    },
-                    code: { className: "bordered-option-classname" },
-                  },
-                  blockType: {
-                    className: "bordered-option-classname",
-                  },
-                  fontSize: {
-                    className: "bordered-option-classname",
-                  },
-                  fontFamily: {
-                    className: "bordered-option-classname",
+                  inline: { inDropdown: true },
+                  list: { inDropdown: true },
+                  textAlign: { inDropdown: true },
+                  link: { inDropdown: true },
+                  history: { inDropdown: true },
+                  image: {
+                    uploadCallback: this.uploadImageCallBack,
+                    previewImage: true,
+                    alt: { present: true, mandatory: true },
                   },
                 }}
               />
-              <br />
             </Col>
             <Button color="primary"> Submit</Button>
           </Form>

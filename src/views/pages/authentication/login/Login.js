@@ -55,7 +55,7 @@ class Login extends React.Component {
                     </CardTitle>
                   </CardHeader>
                   <p className="px-2 auth-title">
-                    Welcome back, please login to your AES account.
+                    Welcome back, please login to your Astrologer-Admin account.
                   </p>
                   <Nav tabs className="px-2">
                     <NavItem>
