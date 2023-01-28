@@ -11,7 +11,7 @@ import {
   DropdownItem,
   DropdownToggle,
 } from "reactstrap";
-// import axiosConfig from "../../../axiosConfig";
+import axiosConfig from "../../../axiosConfig";
 import axios from "axios";
 import { ContextLayout } from "../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
@@ -48,44 +48,121 @@ class UserChatList extends React.Component {
 
       {
         headerName: "User Name",
-        field: "astrologername	",
+        field: "fullname	",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.email}</span>
+              <span>{params.data.userid?.fullname}</span>
             </div>
           );
         },
       },
       {
-        headerName: "Date",
-        field: "date",
+        headerName: "User Name",
+        field: "email",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params.data.userid?.email}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Mobile No.",
+        field: "mobile",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.mobile}</span>
+              <span>{params.data.userid?.mobile}</span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "Astrologer Name",
+        field: "fullname",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data.astroid?.fullname}</span>
             </div>
           );
         },
       },
       {
         headerName: "Time",
-        field: "tiem",
+        field: "minute",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.mobile}</span>
+              <span>{params.data.recharge_planId?.minute}</span>
             </div>
           );
         },
       },
-
+      {
+        headerName: "ConversationId",
+        field: "conversationId",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data.conversationId}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Amount",
+        field: "finalAmt",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data.finalAmt}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Conversation Type",
+        field: "type",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data.type}</span>
+            </div>
+          );
+        },
+      }, {
+        headerName: "Conversation Type",
+        field: "tran_Type",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data.tran_Type}</span>
+            </div>
+          );
+        },
+      },
       {
         headerName: "Action",
         field: "sortorder",
@@ -135,22 +212,16 @@ class UserChatList extends React.Component {
   };
   async componentDidMount() {
     let { id } = this.props.match.params;
-
-    await axios
-      .get(`http://3.108.185.7:4000/user/view_onecust/${id}`)
+    let { userid } = this.props.match.params
+    let userId = localStorage.getItem("userid");
+    await axiosConfig
+      .get(`/user/getOne_Conversation_Wallet/${userid}`)
       .then((response) => {
         let rowData = response.data.data;
         console.log(rowData);
         this.setState({ rowData });
       });
 
-    await axios
-      .get("http://3.108.185.7:4000/admin/allcustomer")
-      .then((response) => {
-        let rowData = response.data.data;
-        console.log(rowData);
-        this.setState({ rowData });
-      });
   }
 
   async runthisfunction(id) {
@@ -232,14 +303,14 @@ class UserChatList extends React.Component {
                               {this.gridApi
                                 ? this.state.currenPageSize
                                 : "" * this.state.getPageSize -
-                                  (this.state.getPageSize - 1)}{" "}
+                                (this.state.getPageSize - 1)}{" "}
                               -{" "}
                               {this.state.rowData.length -
                                 this.state.currenPageSize *
-                                  this.state.getPageSize >
-                              0
+                                this.state.getPageSize >
+                                0
                                 ? this.state.currenPageSize *
-                                  this.state.getPageSize
+                                this.state.getPageSize
                                 : this.state.rowData.length}{" "}
                               of {this.state.rowData.length}
                               <ChevronDown className="ml-50" size={15} />

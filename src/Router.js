@@ -499,8 +499,8 @@ const RouteConfig = ({ component: Component, fullLayout, ...rest }) => (
               fullLayout === true
                 ? context.fullLayout
                 : context.state.activeLayout === "horizontal"
-                ? context.horizontalLayout
-                : context.VerticalLayout;
+                  ? context.horizontalLayout
+                  : context.VerticalLayout;
             return (
               <LayoutTag {...props} permission={props.user}>
                 <Suspense fallback={<Spinner />}>
@@ -618,6 +618,11 @@ class AppRouter extends React.Component {
               component={ViewHoroscopeCategory}
             />
             {/*End Horoscope */}
+            <AppRoute
+              exact={true}
+              path="/app/chat/userChatList"
+              component={UserChatList}
+            />
             {/* Start Rashi */}
             <AppRoute
               path="/app/rashimanagement/rashi/rashiList"
@@ -1244,6 +1249,7 @@ class AppRouter extends React.Component {
               path="/pages/knowledge-base"
               component={knowledgeBase}
             />
+
             <AppRoute
               exact={true}
               path="/pages/knowledge-base/category"

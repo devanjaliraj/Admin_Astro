@@ -260,12 +260,12 @@ const navigationConfig = [
   },
 
   {
-    id: "chatlist",
-    title: "Chat List",
+    id: "userChatList",
+    title: "Conversation List",
     type: "item",
     icon: <Icon.MessageCircle size={20} />,
     permissions: ["admin", "editor"],
-    navLink: "/app/chat/userchatlist",
+    navLink: "/app/chat/userChatList",
   },
 
   // {
