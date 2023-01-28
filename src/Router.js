@@ -30,10 +30,22 @@ const EditUser = lazy(() => import("./views/apps/user/EditUser"));
 // Report //
 const CallDetails = lazy(() => import("./views/apps/report/CallDetails"));
 const RechargeReport = lazy(() => import("./views/apps/report/RechargeReport"));
+const PayoutList = lazy(() => import("./views/apps/report/PayoutList"));
+const PayoutAdd = lazy(() => import("./views/apps/report/PayputAdd"));
+const PayoutEdit = lazy(() => import("./views/apps/report/PayoutEdit"));
+
+
+// orderr
+const AllOrderList= lazy(() =>
+  import("./views/apps/ordermanage/AllOrderLList")
+);
 
 //Wallet//
-const WalletManagement = lazy(() =>
-  import("./views/apps/wallet/WalletManagement")
+const WalletTransaction = lazy(() =>
+  import("./views/apps/wallet/WalletTransaction")
+);
+const CustomWallet = lazy(() =>
+  import("./views/apps/wallet/CustomWallet")
 );
 
 //Transaction history//
@@ -67,6 +79,9 @@ const TodayCallHistory = lazy(() =>
 );
 
 // call management
+const CompleteCall = lazy(() =>
+  import("./views/apps/callmanagement/CompleteCall")
+);
 const CallHistroy = lazy(() =>
   import("./views/apps/callmanagement/CallHistory")
 );
@@ -83,6 +98,15 @@ const AddPrediction = lazy(() =>
 const EditPrediction = lazy(() =>
   import("./views/apps/prediction/EditPrediction")
 );
+
+// Chatintakeform
+const ChatInTakeList = lazy(() => import("./views/apps/chatintakeform/ChatInTakeList"));
+
+
+// rating and review
+const RatingList = lazy(() => import("./views/apps/reviewrating/RatingList"));
+const RatingEdit = lazy(() => import("./views/apps/reviewrating/RatingEdit"));
+
 // Package management
 const AllPlan = lazy(() => import("./views/apps/packagemanager/AllPlan"));
 const AddPlan = lazy(() => import("./views/apps/packagemanager/AddPlan"));
@@ -94,7 +118,14 @@ const PackageOffer = lazy(() =>
 const UserRecharge = lazy(() =>
   import("./views/apps/packagemanager/UserRecharge")
 );
+
 const Commission = lazy(() => import("./views/apps/packagemanager/Commission"));
+const CommissionAdd = lazy(() => import("./views/apps/packagemanager/CommissionAdd"));
+const CommissionEdit = lazy(() =>
+  import("./views/apps/packagemanager/CommissionEdit")
+);
+
+
 //poojaPakage//
 const AddPackage = lazy(() => import("./views/apps/poojapackage/AddPackage"));
 const EditPackage = lazy(() => import("./views/apps/poojapackage/EditPackage"));
@@ -499,8 +530,8 @@ const RouteConfig = ({ component: Component, fullLayout, ...rest }) => (
               fullLayout === true
                 ? context.fullLayout
                 : context.state.activeLayout === "horizontal"
-                  ? context.horizontalLayout
-                  : context.VerticalLayout;
+                ? context.horizontalLayout
+                : context.VerticalLayout;
             return (
               <LayoutTag {...props} permission={props.user}>
                 <Suspense fallback={<Spinner />}>
@@ -618,11 +649,6 @@ class AppRouter extends React.Component {
               component={ViewHoroscopeCategory}
             />
             {/*End Horoscope */}
-            <AppRoute
-              exact={true}
-              path="/app/chat/userChatList"
-              component={UserChatList}
-            />
             {/* Start Rashi */}
             <AppRoute
               path="/app/rashimanagement/rashi/rashiList"
@@ -701,6 +727,10 @@ class AppRouter extends React.Component {
               component={CallHistroy}
             />
             <AppRoute
+              path="/app/callmanagement/completecall"
+              component={CompleteCall}
+            />
+            <AppRoute
               path="/app/callmanagement/callgreject"
               component={CallReject}
             />
@@ -722,6 +752,14 @@ class AppRouter extends React.Component {
             <AppRoute
               path="/app/packagemanager/commission"
               component={Commission}
+            />
+            <AppRoute
+              path="/app/packagemanager/commissionadd"
+              component={CommissionAdd}
+            />
+            <AppRoute
+              path="/app/packagemanager/commissionedit"
+              component={CommissionEdit}
             />
             <AppRoute
               path="/app/packagemanager/packageoffer"
@@ -752,6 +790,19 @@ class AppRouter extends React.Component {
             <AppRoute
               path="/app/prediction/editPrediction/:id"
               component={EditPrediction}
+            />
+            <AppRoute
+              path="/app/reviewrating/ratinglist"
+              component={RatingList}
+            />
+            {/*chatintakeform  */}
+            <AppRoute
+              path="/app/chatintakeform/chatintakelist"
+              component={ChatInTakeList}
+            />
+            <AppRoute
+              path="/app/reviewrating/ratingedit/:id"
+              component={RatingEdit}
             />
             {/* setting */}
             <AppRoute
@@ -953,10 +1004,22 @@ class AppRouter extends React.Component {
               component={RechargeReport}
             />
             <AppRoute path="/app/report/callDetails" component={CallDetails} />
+            <AppRoute path="/app/report/payoutlist" component={PayoutList} />
+            <AppRoute path="/app/report/payoutadd" component={PayoutAdd} />
+            <AppRoute path="/app/report/payoutedit" component={PayoutEdit} />
+            {/* order */}
+            <AppRoute
+              path="/app/ordermanage/allorderlist"
+              component={AllOrderList}
+            />
             {/* wallet */}
             <AppRoute
-              path="/app/wallet/walletManagement"
-              component={WalletManagement}
+              path="/app/wallet/wallettransaction"
+              component={WalletTransaction}
+            />
+            <AppRoute
+              path="/app/wallet/walletcustom"
+              component={CustomWallet}
             />
             {/* Transaction history */}
             <AppRoute
@@ -1249,7 +1312,6 @@ class AppRouter extends React.Component {
               path="/pages/knowledge-base"
               component={knowledgeBase}
             />
-
             <AppRoute
               exact={true}
               path="/pages/knowledge-base/category"

@@ -18,9 +18,9 @@ import { ContextLayout } from "../../../utility/context/Layout";
 import "../../../assets/scss/pages/users.scss";
 import { AgGridReact } from "ag-grid-react";
 import { Route } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 //import classnames from "classnames";
-// import axiosConfig from "../../../axiosConfig";
+import axiosConfig from "../../../axiosConfig";
 
 class TransactionHistory extends React.Component {
   state = {
@@ -47,44 +47,164 @@ class TransactionHistory extends React.Component {
       },
 
       {
-        headerName: "Name",
-        field: "firstname",
-        filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>
-                {params.data.firstname} {params.data.lastname}
-              </span>
-            </div>
-          );
-        },
-      },
-
-      {
-        headerName: "Email",
-        field: "email	",
+        headerName: "Astrologer Name",
+        field: "fullname",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.email}</span>
+              <span> {params.data.astroid?.fullname}</span>
             </div>
           );
         },
       },
 
       {
-        headerName: "Mobile No.",
+        headerName: "Astrologer Mob. No.",
         field: "mobile",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
-            <div>
-              <span>{params.data.mobile}</span>
+            <div className="d-flex align-items-center cursor-pointer">
+              <span> {params.data.astroid?.mobile}</span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "User Name",
+        field: "fullname",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span> {params.data.userid?.fullname}</span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "User Mob. No.",
+        field: "mobile",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span> {params.data.userid?.mobile}</span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "Conversation Time",
+        field: "minute",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span> {params.data.recharge_planId?.minute}</span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "Conversation ID",
+        field: "conversationId",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span> {params.data.conversationId}</span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "Conversation Type",
+        field: "type",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span> {params.data.type}</span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "Previous Amount",
+        field: "beforeAmt",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span> {params.data.beforeAmt}</span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "Deducted Amount",
+        field: "deductedAmt",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span> {params.data.deductedAmt}</span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "Total Amount",
+        field: "finalAmt",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span> {params.data.finalAmt}</span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "Status",
+        field: "status",
+        // filter: true,
+        width: 130,
+        cellRendererFramework: (params) => {
+          // return params.value === "Active" ? (
+          //   <div className="badge badge-pill badge-success">
+          //     {params.data.status}
+          //   </div>
+          // ) : params.value === "Deactive" ? (
+          //   <div className="badge badge-pill badge-warning">
+          //     {params.data.status}
+          //   </div>
+          // ) : null;
+
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span> {params.data.status}</span>
             </div>
           );
         },
@@ -97,7 +217,7 @@ class TransactionHistory extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
-              <Route
+              {/* <Route
                 render={({ history }) => (
                   <Eye
                     className="mr-50"
@@ -110,8 +230,8 @@ class TransactionHistory extends React.Component {
                     }
                   />
                 )}
-              />
-              <Route
+              /> */}
+              {/* <Route
                 render={({ history }) => (
                   <Edit
                     className="mr-50"
@@ -120,7 +240,7 @@ class TransactionHistory extends React.Component {
                     onClick={() => history.push("/app/customer/editCustomer")}
                   />
                 )}
-              />
+              /> */}
               <Trash2
                 className="mr-50"
                 size="25px"
@@ -138,28 +258,19 @@ class TransactionHistory extends React.Component {
     ],
   };
   async componentDidMount() {
-    let { id } = this.props.match.params;
+   let {_id } = this.props.match.params;  
 
-    await axios
-      .get(`http://3.108.185.7:4000/user/view_onecust/${id}`)
-      .then((response) => {
-        let rowData = response.data.data;
-        console.log(rowData);
-        this.setState({ rowData });
-      });
-
-    await axios
-      .get("http://3.108.185.7:4000/admin/allcustomer")
-      .then((response) => {
-        let rowData = response.data.data;
-        console.log(rowData);
-        this.setState({ rowData });
-      });
+    await axiosConfig.get("user/admin_walletHistory").then((response) => {
+      let rowData = response.data.data;
+      console.log(rowData);
+      this.setState({ rowData });
+    });
   }
 
-  async runthisfunction(id) {
-    console.log(id);
-    await axios.get(`http://3.108.185.7:4000/admin/delcustomer/${id}`).then(
+  async runthisfunction(_id) {
+
+     console.log(_id);
+    await axiosConfig.get(`/admin/delete_walletHistory/${_id}`).then(
       (response) => {
         console.log(response);
       },

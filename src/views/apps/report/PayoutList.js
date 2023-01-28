@@ -23,7 +23,6 @@ import { Route } from "react-router-dom";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 
 class PayoutList extends React.Component {
-
   state = {
     rowData: [],
     paginationPageSize: 20,
@@ -48,22 +47,6 @@ class PayoutList extends React.Component {
       },
 
       {
-        headerName: "Usre Name",
-        field: "customername",
-        filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>
-                {params.data.firstname} {params.data.lastname}
-              </span>
-            </div>
-          );
-        },
-      },
-
-      {
         headerName: "Astrologer Name",
         field: "astrologername",
         filter: true,
@@ -77,9 +60,22 @@ class PayoutList extends React.Component {
         },
       },
 
+      {
+        headerName: "Mobile No.",
+        field: "astrologername",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params.data.email}</span>
+            </div>
+          );
+        },
+      },
 
       {
-        headerName: "Amount",
+        headerName: "Payout Date",
         field: "reason",
         filter: true,
         width: 200,
@@ -93,8 +89,8 @@ class PayoutList extends React.Component {
       },
 
       {
-        headerName: "Date",
-        field: "date",
+        headerName: "Request Amount",
+        field: "reason",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
@@ -105,8 +101,37 @@ class PayoutList extends React.Component {
           );
         },
       },
+
       {
-        headerName: "Time",
+        headerName: "Transaction ID",
+        field: "reason",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data.mobile}</span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "Total Balance",
+        field: "reason",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data.mobile}</span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "Status",
         field: "reason",
         filter: true,
         width: 200,
@@ -236,8 +261,8 @@ class PayoutList extends React.Component {
               <Card>
                 <Row className="m-2">
                   <Col>
-                     <h1 sm="6" className="float-left">
-                         Payout List
+                    <h1 sm="6" className="float-left">
+                      Payout List
                     </h1>
                   </Col>
                   <Col>
@@ -245,9 +270,7 @@ class PayoutList extends React.Component {
                       render={({ history }) => (
                         <Button
                           className=" btn btn-success float-right"
-                          onClick={() =>
-                            history.push("/app/astrology/addAstrologer")
-                          }
+                          onClick={() => history.push("/app/report/payoutadd")}
                         >
                           Add
                         </Button>

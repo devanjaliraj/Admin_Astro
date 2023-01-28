@@ -196,6 +196,21 @@ const navigationConfig = [
       },
     ],
   },
+
+  {
+    type: "groupHeader",
+    groupTitle: "Order Management",
+  },
+
+  {
+    id: "orderlist",
+    title: "All Orders",
+    type: "item",
+    icon: <Icon.Box size={20} />,
+    permissions: ["admin", "editor"],
+    navLink: "/app/ordermanage/allorderlist",
+  },
+
   {
     type: "groupHeader",
     groupTitle: "Porduct Management",
@@ -246,7 +261,7 @@ const navigationConfig = [
         type: "item",
         icon: <Icon.PhoneIncoming size={12} />,
         permissions: ["admin", "editor"],
-        navLink: "/app/callmanagement/callhistory",
+        navLink: "/app/callmanagement/completecall",
       },
       {
         id: "callreject",
@@ -256,16 +271,33 @@ const navigationConfig = [
         permissions: ["admin", "editor"],
         navLink: "/app/callmanagement/callgreject",
       },
+      {
+        id: "calltansaction",
+        title: "Call Transac. History",
+        type: "item",
+        icon: <Icon.PhoneMissed size={12} />,
+        permissions: ["admin", "editor"],
+        navLink: "",
+      },
     ],
   },
 
   {
-    id: "userChatList",
-    title: "Conversation List",
+    id: "chatlist",
+    title: "Chat List",
     type: "item",
     icon: <Icon.MessageCircle size={20} />,
     permissions: ["admin", "editor"],
-    navLink: "/app/chat/userChatList",
+    navLink: "/app/chat/userchatlist",
+  },
+
+  {
+    id: "chatintakelist",
+    title: "Conversion take List",
+    type: "item",
+    icon: <Icon.MessageCircle size={20} />,
+    permissions: ["admin", "editor"],
+    navLink: "/app/chatintakeform/chatintakelist",
   },
 
   // {
@@ -385,13 +417,22 @@ const navigationConfig = [
       },
     ],
   },
+
+  {
+    id: "commissionset",
+    title: "Commission Set ",
+    type: "item",
+    icon: <Icon.DollarSign size={20} />,
+    permissions: ["admin", "editor"],
+    navLink: "/app/packagemanager/commission",
+  },
   {
     id: "payouts",
     title: "Payouts ",
     type: "item",
     icon: <Icon.DollarSign size={20} />,
     permissions: ["admin", "editor"],
-    navLink: "/payoutlist",
+    navLink: "/app/report/payoutlist",
   },
 
   {
@@ -402,6 +443,36 @@ const navigationConfig = [
     permissions: ["admin", "editor"],
     navLink: "/app/transaction/transactionHistory",
   },
+
+  {
+    id: "ratinglist",
+    title: "Astro Rating and Review",
+    type: "item",
+    icon: <Icon.Star size={20} />,
+    permissions: ["admin", "editor"],
+    navLink: "/app/reviewrating/ratinglist",
+  },
+
+  // {
+  //   type: "groupHeader",
+  //   groupTitle: "Wallet Management",
+  // },
+  // {
+  //   id: "walletcustom",
+  //   title: "Customer Wallet",
+  //   type: "item",
+  //   icon: <Icon.DollarSign size={20} />,
+  //   permissions: ["admin", "editor"],
+  //   navLink: "/app/wallet/walletcustom",
+  // },
+  // {
+  //   id: "wallettansaction",
+  //   title: "Wallet Transaction",
+  //   type: "item",
+  //   icon: <Icon.DollarSign size={20} />,
+  //   permissions: ["admin", "editor"],
+  //   navLink: "/app/wallet/wallettransaction",
+  // },
 
   {
     type: "groupHeader",
