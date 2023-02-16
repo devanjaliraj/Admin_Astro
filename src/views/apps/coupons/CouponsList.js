@@ -15,12 +15,10 @@ import axiosConfig from "../../../axiosConfig";
 import { ContextLayout } from "../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
 import { Edit, Trash2, ChevronDown } from "react-feather";
-import { history } from "../../../history";
-// import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
-
 import "../../../assets/scss/pages/users.scss";
+import { Route } from "react-router-dom";
 
 class BundleOffer extends React.Component {
   state = {
@@ -194,14 +192,17 @@ class BundleOffer extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
-              <Edit
-                className="mr-50"
-                size={15}
-                color="blue"
-                onClick={() =>
-                  history.push(`/app/coupons/editCoupon/${params.data._id}`)
-                }
-              />
+              <Route
+                render={({ history }) => (
+                  <Edit
+                    className="mr-50"
+                    size={15}
+                    color="blue"
+                    onClick={() =>
+                      history.push(`/app/coupons/editCoupon/${params.data._id}`)
+                    }
+                  />
+                )} />
               <Trash2
                 size={15}
                 color="red"
@@ -220,11 +221,7 @@ class BundleOffer extends React.Component {
 
   async componentDidMount() {
     await axiosConfig
-      .get("/getcoupon", {
-        headers: {
-          "auth-adtoken": localStorage.getItem("auth-adtoken"),
-        },
-      })
+      .get("/getcoupon")
       .then((response) => {
         let rowData = response.data.data;
         console.log(rowData);
@@ -284,12 +281,15 @@ class BundleOffer extends React.Component {
                   </h1>
                 </Col>
                 <Col>
-                  <Button
-                    className=" btn btn-danger float-right"
-                    onClick={() => history.push("/app/coupons/addcoupons")}
-                  >
-                    Add New Coupons
-                  </Button>
+                  <Route
+                    render={({ history }) => (
+                      <Button
+                        className=" btn btn-danger float-right"
+                        onClick={() => history.push("/app/coupons/addcoupons")}
+                      >
+                        Add New Coupons
+                      </Button>
+                    )} />
                 </Col>
               </Row>
               <CardBody>
@@ -302,14 +302,14 @@ class BundleOffer extends React.Component {
                             {this.gridApi
                               ? this.state.currenPageSize
                               : "" * this.state.getPageSize -
-                                (this.state.getPageSize - 1)}{" "}
+                              (this.state.getPageSize - 1)}{" "}
                             -{" "}
                             {this.state.rowData.length -
                               this.state.currenPageSize *
-                                this.state.getPageSize >
-                            0
+                              this.state.getPageSize >
+                              0
                               ? this.state.currenPageSize *
-                                this.state.getPageSize
+                              this.state.getPageSize
                               : this.state.rowData.length}{" "}
                             of {this.state.rowData.length}
                             <ChevronDown className="ml-50" size={15} />

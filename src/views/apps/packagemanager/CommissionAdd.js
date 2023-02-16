@@ -8,19 +8,54 @@ import {
   Label,
   Input,
   Button,
+  CustomInput,
 } from "reactstrap";
 import axiosConfig from "../../../axiosConfig";
-// import swal from "sweetalert";
+import swal from "sweetalert";
 import { Route } from "react-router-dom";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
-// import Textarea from "../../forms/form-elements/textarea/Textarea";
+
 
 class AddCommission extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dealerN: [],
+      product: "",
+      comision_name: "",
+      comision_rate: "",
+      status: ""
+
     };
+    this.state = {
+      categoryList: [],
+      productList: [],
+    };
+  }
+  componentDidUpdate() {
+
+
+    axiosConfig
+      .get(`/user/productbycategory/${this.state.category}`)
+      .then((response) => {
+        console.log(response.data.data);
+        this.setState({ productList: response.data.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  componentDidMount() {
+    console.log(this.state.category);
+    axiosConfig
+      .get(`/admin/getproductcalegory`)
+      .then((response) => {
+        console.log(response.data.data);
+        this.setState({ categoryList: response.data.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   changeHandler1 = (e) => {
@@ -33,24 +68,18 @@ class AddCommission extends React.Component {
     e.preventDefault();
 
     axiosConfig
-      .post(
-        "/admin/addabout",
-        this.state
-        // {
-        //   headers: {
-        //     "auth-adtoken": localStorage.getItem("auth-adtoken"),
-        //   },
-        // }
-      )
+      .post("/admin/add_Comision", this.state)
       .then((response) => {
         console.log(response);
-        // swal("Success!", "Submitted SuccessFull!", "success");
-        this.props.history.push("/app/about/AllaboutUs");
+        swal("Success!", "Submitted SuccessFull!", "success");
+        this.props.history.push("/app/packagemanager/commission");
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
+
 
   render() {
     return (
@@ -85,36 +114,51 @@ class AddCommission extends React.Component {
           <CardBody>
             <Form className="m-1" onSubmit={this.submitHandler}>
               <Row>
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Category</Label>
-                  <Input
+                <Col lg="4" md="4" sm="4" className="mb-2">
+                  <Label>Category Name</Label>
+                  <CustomInput
                     required
-                    type="text"
-                    name="title"
-                    placeholder="Category"
-                    value={this.state.title}
+                    type="select"
+                    name="category"
+                    placeholder="Enter Title"
+                    value={this.state.category}
                     onChange={this.changeHandler}
-                  ></Input>
+                  >
+                    <option>Select.....</option>
+                    {this.state.categoryList?.map((catList) => (
+                      <option key={catList._id} value={catList._id}>
+                        {catList.name}
+                      </option>
+                    ))}
+                  </CustomInput>
                 </Col>
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Product</Label>
-                  <Input
+                <Col lg="4" md="4" sm="4" className="mb-2">
+                  <Label>Product Name</Label>
+                  <CustomInput
                     required
-                    type="text"
-                    name="mrp"
-                    placeholder="Product"
-                    value={this.state.mrp}
+                    type="select"
+                    name="product"
+                    placeholder="Enter Title"
+                    value={this.state.product}
                     onChange={this.changeHandler}
-                  ></Input>
+                  >
+                    <option>Select.....</option>
+                    {this.state.productList?.map((proList) => (
+                      <option key={proList._id} value={proList._id}>
+                        {proList.productname}
+                      </option>
+                    ))}
+                  </CustomInput>
                 </Col>
+
                 <Col lg="6" md="6" sm="6" className="mb-2">
                   <Label>Commission Name</Label>
                   <Input
                     required
                     type="text"
-                    name="offer_price"
+                    name="comision_name"
                     placeholder="Commission Name"
-                    value={this.state.offer_price}
+                    value={this.state.comision_name}
                     onChange={this.changeHandler}
                   ></Input>
                 </Col>
@@ -123,9 +167,9 @@ class AddCommission extends React.Component {
                   <Input
                     required
                     type="text"
-                    name="offer_price"
-                    placeholder="Enter Offer Price"
-                    value={this.state.offer_price}
+                    name="comision_rate"
+                    placeholder="Enter Commision Rate"
+                    value={this.state.comision_rate}
                     onChange={this.changeHandler}
                   ></Input>
                 </Col>

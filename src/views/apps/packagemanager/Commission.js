@@ -11,12 +11,10 @@ import {
   DropdownItem,
   DropdownToggle,
 } from "reactstrap";
-// import axiosConfig from "../../../axiosConfig";
-import axios from "axios";
+import axiosConfig from "../../../axiosConfig";
 import { ContextLayout } from "../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
 import { Eye, Edit, Trash2, ChevronDown } from "react-feather";
-//import classnames from "classnames";
 import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 import "../../../assets/scss/pages/users.scss";
 import { Route } from "react-router-dom";
@@ -48,14 +46,14 @@ class Commission extends React.Component {
 
       {
         headerName: "Category Name",
-        field: "customername",
+        field: "category",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div>
               <span>
-                {params.data.firstname} {params.data.lastname}
+                {params.data.product?.category?.name}
               </span>
             </div>
           );
@@ -64,13 +62,13 @@ class Commission extends React.Component {
 
       {
         headerName: "Commission Name",
-        field: "",
+        field: "comision_name",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.mobile}</span>
+              <span>{params.data.comision_name}</span>
             </div>
           );
         },
@@ -78,13 +76,13 @@ class Commission extends React.Component {
 
       {
         headerName: "Product Name",
-        field: "astrologername",
+        field: "productname",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.email}</span>
+              <span>{params.data.product?.productname}</span>
             </div>
           );
         },
@@ -92,13 +90,13 @@ class Commission extends React.Component {
 
       {
         headerName: "Commission Rate(%)",
-        field: "",
+        field: "comision_rate",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.mobile}</span>
+              <span>{params.data.comision_rate}</span>
             </div>
           );
         },
@@ -149,7 +147,7 @@ class Commission extends React.Component {
                     className="mr-50"
                     size="25px"
                     color="blue"
-                    onClick={() => history.push("/app/userride/editUserRide")}
+                    onClick={() => history.push(`/app/packagemanager/commissionedit/${params.data._id}`)}
                   />
                 )}
               />
@@ -170,36 +168,23 @@ class Commission extends React.Component {
     ],
   };
   async componentDidMount() {
-    let { id } = this.props.match.params;
 
-    await axios
-      .get(`http://3.108.185.7:4000/user/view_onecust/${id}`)
+    await axiosConfig.get(`/admin/comisionList`)
       .then((response) => {
         let rowData = response.data.data;
         console.log(rowData);
         this.setState({ rowData });
       });
 
-    await axios
-      .get("http://3.108.185.7:4000/admin/allcustomer")
-      .then((response) => {
-        let rowData = response.data.data;
-        console.log(rowData);
-        this.setState({ rowData });
-      });
+
   }
-
   async runthisfunction(id) {
     console.log(id);
-    await axios.get(`http://3.108.185.7:4000/admin/delcustomer/${id}`).then(
-      (response) => {
-        console.log(response);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    await axiosConfig.get(`/admin/dltComision/${id}`).then((response) => {
+      console.log(response);
+    });
   }
+
   onGridReady = (params) => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -268,14 +253,14 @@ class Commission extends React.Component {
                               {this.gridApi
                                 ? this.state.currenPageSize
                                 : "" * this.state.getPageSize -
-                                  (this.state.getPageSize - 1)}{" "}
+                                (this.state.getPageSize - 1)}{" "}
                               -{" "}
                               {this.state.rowData.length -
                                 this.state.currenPageSize *
-                                  this.state.getPageSize >
-                              0
+                                this.state.getPageSize >
+                                0
                                 ? this.state.currenPageSize *
-                                  this.state.getPageSize
+                                this.state.getPageSize
                                 : this.state.rowData.length}{" "}
                               of {this.state.rowData.length}
                               <ChevronDown className="ml-50" size={15} />

@@ -36,7 +36,7 @@ const PayoutEdit = lazy(() => import("./views/apps/report/PayoutEdit"));
 
 
 // orderr
-const AllOrderList= lazy(() =>
+const AllOrderList = lazy(() =>
   import("./views/apps/ordermanage/AllOrderLList")
 );
 
@@ -530,8 +530,8 @@ const RouteConfig = ({ component: Component, fullLayout, ...rest }) => (
               fullLayout === true
                 ? context.fullLayout
                 : context.state.activeLayout === "horizontal"
-                ? context.horizontalLayout
-                : context.VerticalLayout;
+                  ? context.horizontalLayout
+                  : context.VerticalLayout;
             return (
               <LayoutTag {...props} permission={props.user}>
                 <Suspense fallback={<Spinner />}>
@@ -758,7 +758,7 @@ class AppRouter extends React.Component {
               component={CommissionAdd}
             />
             <AppRoute
-              path="/app/packagemanager/commissionedit"
+              path="/app/packagemanager/commissionedit/:id"
               component={CommissionEdit}
             />
             <AppRoute
