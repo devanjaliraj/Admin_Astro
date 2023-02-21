@@ -86,7 +86,7 @@ class Profile extends React.Component {
     for (var key of data.keys()) {
       console.log(key);
     }
-    let { id } = this.props.match.params;
+    // let { id } = this.props.match.params;
     axiosConfig
       .post(`/admin/editprofile/632d768e9b3a6f64695e1141`, data, {
         headers: {

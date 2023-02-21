@@ -63,10 +63,10 @@ const navigationConfig = [
     navLink: "/app/kundlimanage/kundlimatchlist",
   },
 
-  {
-    type: "groupHeader",
-    groupTitle: "Horoscopes",
-  },
+  // {
+  //   type: "groupHeader",
+  //   groupTitle: "Horoscopes",
+  // },
   // {
   //   id: "horoscopes",
   //   title: "Horoscopes",
