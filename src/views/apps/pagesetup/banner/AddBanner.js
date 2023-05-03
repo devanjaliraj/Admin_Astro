@@ -24,6 +24,7 @@ export default class AddBanner extends Component {
     super(props);
     this.state = {
       banner_title: "",
+      root: "",
       status: "",
       banner_img: "",
       selectedFile: undefined,
@@ -48,10 +49,11 @@ export default class AddBanner extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
   submitHandler = (e) => {
+    console.log(this.state.root);
     e.preventDefault();
-
     const data = new FormData();
     data.append("banner_title", this.state.banner_title);
+    data.append("root", this.state.root);
     data.append("status", this.state.status);
 
     for (const file of this.state.selectedFile) {
@@ -133,6 +135,17 @@ export default class AddBanner extends Component {
                     name="banner_title"
                     placeholder=""
                     value={this.state.banner_title}
+                    onChange={this.changeHandler}
+                  ></Input>
+                </Col>
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>Add Route</Label>
+                  <Input
+                    required
+                    type="text"
+                    name="root"
+                    placeholder=""
+                    value={this.state.root}
                     onChange={this.changeHandler}
                   ></Input>
                 </Col>

@@ -5,24 +5,22 @@ import {
   Input,
   Row,
   Col,
-  Button,
   UncontrolledDropdown,
   DropdownMenu,
   DropdownItem,
   DropdownToggle,
+  Button,
 } from "reactstrap";
-// import axiosConfig from "../../../axiosConfig";
-import axios from "axios";
+import axiosConfig from "../../../axiosConfig";
 import { ContextLayout } from "../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
-import { Eye, Edit, Trash2, ChevronDown } from "react-feather";
-//import classnames from "classnames";
+import { Edit, Trash2, ChevronDown } from "react-feather";
 import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
+import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 import "../../../assets/scss/pages/users.scss";
 import { Route } from "react-router-dom";
-import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 
-class PackageOffer extends React.Component {
+class ChatList extends React.Component {
   state = {
     rowData: [],
     paginationPageSize: 20,
@@ -45,76 +43,126 @@ class PackageOffer extends React.Component {
         // headerCheckboxSelectionFilteredOnly: true,
         // headerCheckboxSelection: true,
       },
-
-      {
-        headerName: "Thumnail Image",
-        field: "thumnail",
-        filter: true,
-        width: 150,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <img
-                src={params.data.image}
-                alt="Thumnnail_Image_missing"
-                width={50}
-                height={50}
-              />
-            </div>
-          );
-        },
-      },
-
-      {
-        headerName: "Title",
-        field: "title",
-        filter: true,
-        width: 150,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data.title}</span>
-            </div>
-          );
-        },
-      },
-
       // {
-      //   headerName: "Description",
-      //   field: "description	",
-      //   filter: true,
-      //   width: 200,
+      //   headerName: "Code",
+      //   field: "product_img",
+      //   filter: false,
+      //   width: 120,
       //   cellRendererFramework: (params) => {
       //     return (
       //       <div className="d-flex align-items-center cursor-pointer">
-      //         <span>{params.data.mrp_price}</span>
+      //         <img
+      //           className="rounded-circle  mr-4"
+      //           src={params.data?.product_img}
+      //           alt=" brand"
+      //           height="40"
+      //           width="40"
+      //         />
       //       </div>
       //     );
       //   },
       // },
-
       {
-        headerName: "Amount",
-        field: "time",
+        headerName: "Chat Code",
+        field: "offer_code",
         filter: true,
-        width: 100,
+        width: 150,
         cellRendererFramework: (params) => {
           return (
-            <div>
-              <span>{params.data.mrp_price}</span>
+            <div className="">
+              <span>{params.data.offer_code}</span>
             </div>
           );
         },
       },
       {
-        headerName: "Offer Price",
-        field: "time",
+        headerName: "Chat Title",
+        field: "CouponTitle",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="">
+              <span>{params.data.CouponTitle}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Product Name",
+        field: "product_name",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="">
+              <span>{params.data.product?.product_name}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Start Date",
+        field: "startDate",
+        filter: true,
+        width: 180,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="">
+              <span>{params.data.startDate}</span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "Expire On",
+        field: "expireOn",
+        filter: true,
+        width: 180,
+        cellRendererFramework: (params) => {
+          return (
+            <div className=" mr-4">
+              <span>{params.data.expireOn}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Usage Limit",
+        field: "usage_limit",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div className=" mr-4">
+              <span>{params.data.usage_limit}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Amont",
+        field: "amount",
+        filter: true,
+        width: 120,
+        cellRendererFramework: (params) => {
+          return (
+            <div className=" mr-4">
+              <span>{params.data.amount}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Description",
+        field: "description",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
-            <div>
-              <span>{params.data.offer_price}</span>
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params.data.description}</span>
             </div>
           );
         },
@@ -122,56 +170,42 @@ class PackageOffer extends React.Component {
 
       {
         headerName: "Status",
-        field: "dateofregister",
+        field: "status",
         filter: true,
         width: 150,
         cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>true</span>
+          return params.value === "Active" ? (
+            <div className="badge badge-pill badge-success ">
+              {params.data.status}
             </div>
-          );
+          ) : params.value === "Inactive" ? (
+            <div className="badge badge-pill badge-danger">
+              {params.data.status}
+            </div>
+          ) : null;
         },
       },
-
       {
         headerName: "Actions",
-        field: "sortorder",
-        width: 200,
+        field: "transactions",
+        width: 150,
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
               <Route
                 render={({ history }) => (
-                  <Eye
-                    className="mr-50"
-                    size="25px"
-                    color="green"
-                    onClick={() =>
-                      history.push(
-                        `/app/packagemanager/packageofferViewOne/${params.data._id}`
-                      )
-                    }
-                  />
-                )}
-              />
-              <Route
-                render={({ history }) => (
                   <Edit
                     className="mr-50"
-                    size="25px"
+                    size={15}
                     color="blue"
                     onClick={() =>
-                      history.push(
-                        `/app/userride/editUserRide/${params.data._id}`
-                      )
+                      history.push(`/app/coupons/editCoupon/${params.data._id}`)
                     }
                   />
                 )}
               />
               <Trash2
-                className="mr-50"
-                size="25px"
+                size={15}
                 color="red"
                 onClick={() => {
                   let selectedData = this.gridApi.getSelectedRows();
@@ -185,35 +219,22 @@ class PackageOffer extends React.Component {
       },
     ],
   };
-  async componentDidMount() {
-    let { id } = this.props.match.params;
-    // await axios
-    //   .get(`http://3.108.185.7:4000/user/view_onecust/${id}`)
-    //   .then((response) => {
-    //     let rowData = response.data.data;
-    //     console.log("Offersss", rowData);
-    //     this.setState({ rowData });
-    //   });
 
-    await axios
-      .get("http://65.2.148.70:8000/admin/getPackage")
-      .then((response) => {
-        let rowData = response.data.data;
-        this.setState({ rowData });
-      });
+  async componentDidMount() {
+    await axiosConfig.get("/getcoupon").then((response) => {
+      let rowData = response.data.data;
+      console.log(rowData);
+      this.setState({ rowData });
+    });
   }
 
   async runthisfunction(id) {
     console.log(id);
-    await axios.get(`http://3.108.185.7:4000/admin/delcustomer/${id}`).then(
-      (response) => {
-        console.log(response);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    await axiosConfig.get(`/delcoupon/${id}`).then((response) => {
+      console.log(response);
+    });
   }
+
   onGridReady = (params) => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -223,9 +244,11 @@ class PackageOffer extends React.Component {
       totalPages: this.gridApi.paginationGetTotalPages(),
     });
   };
+
   updateSearchQuery = (val) => {
     this.gridApi.setQuickFilter(val);
   };
+
   filterSize = (val) => {
     if (this.gridApi) {
       this.gridApi.paginationSetPageSize(Number(val));
@@ -235,15 +258,15 @@ class PackageOffer extends React.Component {
       });
     }
   };
+
   render() {
     const { rowData, columnDefs, defaultColDef } = this.state;
     return (
-      // console.log(rowData),
       <div>
         <Breadcrumbs
-          breadCrumbTitle="All Package"
+          breadCrumbTitle="Chat List"
           breadCrumbParent="Home"
-          breadCrumbActive="All Package"
+          breadCrumbActive="Chat List"
         />
 
         <Row className="app-user-list">
@@ -252,8 +275,8 @@ class PackageOffer extends React.Component {
             <Card>
               <Row className="m-2">
                 <Col>
-                  <h1 sm="6" className="float-left">
-                    All Package
+                  <h1 col-sm-6 className="float-left">
+                    Chat List
                   </h1>
                 </Col>
                 <Col>
@@ -261,11 +284,9 @@ class PackageOffer extends React.Component {
                     render={({ history }) => (
                       <Button
                         className=" btn btn-success float-right"
-                        onClick={() =>
-                          history.push("/app/poojapackage/addpackage")
-                        }
+                        onClick={() => history.push("/app/coupons/addcoupons")}
                       >
-                        Add New
+                        Add New Chat
                       </Button>
                     )}
                   />
@@ -370,4 +391,5 @@ class PackageOffer extends React.Component {
     );
   }
 }
-export default PackageOffer;
+
+export default ChatList;

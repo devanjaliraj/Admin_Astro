@@ -89,10 +89,7 @@ class AddAstrologer extends React.Component {
                   <Label>Name</Label>
                   <Input
                     type="text"
-                    // name="desc"
-                    // value={this.state.desc}
-                    // onChange={this.changeHandler}
-                    // rows="3"
+
                     placeholder="Enter Astrologer Name"
                   />
                 </Col>

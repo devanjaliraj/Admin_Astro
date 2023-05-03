@@ -8,9 +8,9 @@ import {
   Breadcrumb,
   BreadcrumbItem,
 } from "reactstrap";
-import "../../../assets/scss/pages/app-ecommerce-shop.scss";
+import "../../../../assets/scss/pages/app-ecommerce-shop.scss";
 import { Route } from "react-router-dom";
-import axiosConfig from "../../../axiosConfig";
+import axiosConfig from "../../../../axiosConfig";
 import ReactHtmlParser from "react-html-parser";
 class ViewHoroscopeCategory extends React.Component {
   constructor(props) {
@@ -23,14 +23,14 @@ class ViewHoroscopeCategory extends React.Component {
   componentDidMount() {
     let { id } = this.props.match.params;
     axiosConfig
-      .get(`/admin/getoneCategory/${id}`)
+      .get(`/admin/admin_getone_event/${id}`)
       .then((response) => {
         // console.log(response.data);
         console.log(response.data.data);
         this.setState({ data: response.data.data });
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response);
       });
   }
 
@@ -46,14 +46,12 @@ class ViewHoroscopeCategory extends React.Component {
                     Home
                   </BreadcrumbItem>
                   <BreadcrumbItem
-                    href="/app/horoscopecategory/horoscopeCategoryList"
+                    href="/app/event/bookEvent/bookEventList"
                     tag="a"
                   >
-                    Horoscope Category List
+                    Book Event List
                   </BreadcrumbItem>
-                  <BreadcrumbItem active>
-                    View Horoscope Category
-                  </BreadcrumbItem>
+                  <BreadcrumbItem active>View Book Event</BreadcrumbItem>
                 </Breadcrumb>
               </div>
             </Col>
@@ -62,7 +60,7 @@ class ViewHoroscopeCategory extends React.Component {
             <Row className="m-2">
               <Col>
                 <h1 col-sm-6 className="float-left">
-                  View Horoscope Category
+                  View Book Event
                 </h1>
               </Col>
               <Col>
@@ -71,9 +69,7 @@ class ViewHoroscopeCategory extends React.Component {
                     <Button
                       className=" btn btn-danger float-right"
                       onClick={() =>
-                        history.push(
-                          "/app/horoscopecategory/horoscopeCategoryList"
-                        )
+                        history.push("/app/event/bookEvent/bookEventList")
                       }
                     >
                       Back
@@ -85,13 +81,21 @@ class ViewHoroscopeCategory extends React.Component {
             <CardBody className="pb-0">
               <Row className="mb-5 mt-2">
                 <Col md="6" sm="12" className="mb-4">
-                  <h4>Title</h4>
-                  <h6 className=""> {this.state.data.title}</h6>
+                  <h4>Enent Name</h4>
+                  <h6 className="">
+                    {" "}
+                    {this.state.data.event_list?.event_name}
+                  </h6>
                 </Col>
-                {/* <Col md="6" sm="12" className="mb-4">
-                  <h4>Value</h4>
-                  <h6 className=""> {this.state.data.value}</h6>
-                </Col> */}
+                <Col md="6" sm="12" className="mb-4">
+                  <h4>Price OnLine</h4>
+                  <h6 className=""> {this.state.data.price_online}</h6>
+                </Col>
+                <Col md="6" sm="12" className="mb-4">
+                  <h4>Price OffLine</h4>
+                  <h6 className=""> {this.state.data.price_offline}</h6>
+                </Col>
+
                 <Col md="6" sm="12" className="mb-4">
                   <h4>Description</h4>
                   <h6 className=""> {ReactHtmlParser(this.state.data.desc)}</h6>

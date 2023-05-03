@@ -8,27 +8,39 @@ import {
   Input,
   Label,
   Button,
-  FormGroup,
+  CustomInput,
 } from "reactstrap";
-import axiosConfig from "../../../axiosConfig";
+import axiosConfig from "../../../../axiosConfig";
 import "react-toastify/dist/ReactToastify.css";
 import { Route } from "react-router-dom";
-import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
+import Breadcrumbs from "../../../../components/@vuexy/breadCrumbs/BreadCrumb";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { EditorState, convertToRaw } from "draft-js";
-import "../../../assets/scss/plugins/extensions/editor.scss";
+import "../../../../assets/scss/plugins/extensions/editor.scss";
 import draftToHtml from "draftjs-to-html";
 import swal from "sweetalert";
-export class AddHoroscopeCategory extends Component {
+export class AddBannerPooja extends Component {
   constructor(props) {
     super(props);
     this.state = {
       title: "",
-      desc: "",
+      img: "",
       editorState: EditorState.createEmpty(),
+      selectedFile: undefined,
+      selectedName: "",
     };
   }
+  onChangeHandler = (event) => {
+    this.setState({ selectedFile: event.target.files[0] });
+    this.setState({ selectedName: event.target.files[0].name });
+    console.log(event.target.files[0]);
+  };
+  onChangeHandler = (event) => {
+    this.setState({ selectedFile: event.target.files });
+    this.setState({ selectedName: event.target.files.name });
+    console.log(event.target.files);
+  };
   uploadImageCallBack = (file) => {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
@@ -54,6 +66,7 @@ export class AddHoroscopeCategory extends Component {
       desc: draftToHtml(convertToRaw(editorState.getCurrentContent())),
     });
   };
+
   changeHandler1 = (e) => {
     this.setState({ status: e.target.value });
   };
@@ -61,17 +74,53 @@ export class AddHoroscopeCategory extends Component {
   changeHandler = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
+  //   async componentDidMount() {
+  //     axiosConfig
+  //       .get("/admin/admin_poojaList")
+  //       .then((response) => {
+  //         console.log(response);
+  //         this.setState({
+  //           pujaN: response.data.data,
+  //         });
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   }
+
   submitHandler = (e) => {
     e.preventDefault();
+    const data = new FormData();
+    data.append("title", this.state.title);
 
+    for (const file of this.state.selectedFile) {
+      if (this.state.selectedFile !== null) {
+        data.append("img", file, file.name);
+      }
+    }
+    for (var value of data.values()) {
+      console.log(value);
+    }
+    for (var key of data.keys()) {
+      console.log(key);
+    }
+    // for (const file of this.state.selectedFile) {
+    // if (this.state.selectedFile !== null) {
+    //   data.append("poojaimg", this.state.selectedFile);
+    // }
+    // }
+    // for (var value of data.values()) {
+    //   console.log(value);
+    // }
+    // for (var key of data.keys()) {
+    //   console.log(key);
+    // }
     axiosConfig
-      .post("/admin/addCategory", this.state)
-
+      .post(`/admin/add_PoojaBanner`, data)
       .then((response) => {
-        console.log(response.data);
-
+        console.log("DFSS@@@@@@@FD", response.data);
         swal("Success!", "Submitted SuccessFull!", "success");
-        this.props.history.push("/app/horoscopecategory/horoscopeCategoryList");
+        this.props.history.push("/app/event/bennerPooja/bannerPoojaList");
       })
       .catch((error) => {
         console.log(error);
@@ -81,15 +130,15 @@ export class AddHoroscopeCategory extends Component {
     return (
       <div>
         <Breadcrumbs
-          breadCrumbTitle="Add Horoscope Category"
+          breadCrumbTitle="Puja Type"
           breadCrumbParent=" home"
-          breadCrumbActive="Add Horoscope Category"
+          breadCrumbActive="Add Puja Type"
         />
         <Card>
           <Row className="m-2">
             <Col>
               <h1 col-sm-6 className="float-left">
-                Add Horoscope Category
+                Add Puja
               </h1>
             </Col>
             <Col>
@@ -98,9 +147,7 @@ export class AddHoroscopeCategory extends Component {
                   <Button
                     className=" btn btn-danger float-right"
                     onClick={() =>
-                      history.push(
-                        "/app/horoscopecategory/horoscopeCategoryList"
-                      )
+                      history.push("/app/event/bennerPooja/BannerPoojaList")
                     }
                   >
                     Back
@@ -112,65 +159,28 @@ export class AddHoroscopeCategory extends Component {
           <CardBody>
             <Form className="m-1" onSubmit={this.submitHandler}>
               <Row>
-                <Col lg="6" md="6" sm="12" className="mb-2">
+                <Col lg="4" md="4" sm="4" className="mb-2">
                   <Label>Title</Label>
                   <Input
                     required
                     type="text"
                     name="title"
-                    placeholder="Enter Title"
+                    placeholder="Enter Title "
                     value={this.state.title}
                     onChange={this.changeHandler}
                   ></Input>
                 </Col>
 
-                <Col lg="12" md="12" sm="12" className="mb-2">
-                  <Label> Description</Label>
-
-                  <br />
-
-                  <Editor
-                    wrapperClassName="demo-wrapper"
-                    editorClassName="demo-editor"
-                    onEditorStateChange={this.onEditorStateChange}
-                    toolbar={{
-                      inline: { inDropdown: true },
-                      list: { inDropdown: true },
-                      textAlign: { inDropdown: true },
-                      link: { inDropdown: true },
-                      history: { inDropdown: true },
-                      image: {
-                        uploadCallback: this.uploadImageCallBack,
-                        previewImage: true,
-                        alt: { present: true, mandatory: true },
-                      },
-                    }}
+                <Col lg="4" md="4" sm="4" className="mb-2">
+                  <Label>Image</Label>
+                  <CustomInput
+                    type="file"
+                    // multiple
+                    onChange={this.onChangeHandler}
                   />
                 </Col>
               </Row>
-              {/* <Col lg="6" md="6" sm="6" className="mb-2">
-                <Label className="mb-1">Status</Label>
-                <div
-                  className="form-label-group"
-                  onChange={(e) => this.changeHandler1(e)}
-                >
-                  <input
-                    style={{ marginRight: "3px" }}
-                    type="radio"
-                    name="status"
-                    value="Active"
-                  />
-                  <span style={{ marginRight: "20px" }}>Active</span>
 
-                  <input
-                    style={{ marginRight: "3px" }}
-                    type="radio"
-                    name="status"
-                    value="Inactive"
-                  />
-                  <span style={{ marginRight: "3px" }}>Inactive</span>
-                </div>
-              </Col> */}
               <Row>
                 <Col lg="6" md="6" sm="6" className="mb-2">
                   <Button.Ripple
@@ -189,4 +199,4 @@ export class AddHoroscopeCategory extends Component {
     );
   }
 }
-export default AddHoroscopeCategory;
+export default AddBannerPooja;

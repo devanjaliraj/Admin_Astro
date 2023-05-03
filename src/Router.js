@@ -8,6 +8,29 @@ import knowledgeBaseCategory from "./views/pages/knowledge-base/Category";
 import knowledgeBaseQuestion from "./views/pages/knowledge-base/Questions";
 import { ContextLayout } from "./utility/context/Layout";
 
+// event
+const BannerPoojaList = lazy(() =>
+  import("./views/apps/event/bennerPooja/BannerPoojaList")
+);
+const AddBannerPooja = lazy(() =>
+  import("./views/apps/event/bennerPooja/AddBannerPooja")
+);
+// const EventList = lazy(() => import("./views/apps/event/addEvent/EventList"));
+// const AddEvent = lazy(() => import("./views/apps/event/addEvent/AddEvent"));
+
+// const BookEventList = lazy(() =>
+//   import("./views/apps/event/bookEvent/BookEventList")
+// );
+// const AddBookEvent = lazy(() =>
+//   import("./views/apps/event/bookEvent/AddBookEvent")
+// );
+// const EditBookEvent = lazy(() =>
+//   import("./views/apps/event/bookEvent/EditBookEvent")
+// );
+// const ViewBookEvent = lazy(() =>
+//   import("./views/apps/event/bookEvent/ViewBookEvent")
+// );
+
 // Route-based code splitting
 const analyticsDashboard = lazy(() =>
   import("./views/dashboard/analytics/AnalyticsDashboard")
@@ -34,8 +57,23 @@ const PayoutList = lazy(() => import("./views/apps/report/PayoutList"));
 const PayoutAdd = lazy(() => import("./views/apps/report/PayputAdd"));
 const PayoutEdit = lazy(() => import("./views/apps/report/PayoutEdit"));
 
+// event
+const EventList = lazy(() => import("./views/apps/event/addEvent/EventList"));
+const AddEvent = lazy(() => import("./views/apps/event/addEvent/AddEvent"));
 
-// orderr
+const BookEventList = lazy(() =>
+  import("./views/apps/event/bookEvent/BookEventList")
+);
+const AddBookEvent = lazy(() =>
+  import("./views/apps/event/bookEvent/AddBookEvent")
+);
+const EditBookEvent = lazy(() =>
+  import("./views/apps/event/bookEvent/EditBookEvent")
+);
+const ViewBookEvent = lazy(() =>
+  import("./views/apps/event/bookEvent/ViewBookEvent")
+);
+// order
 const AllOrderList = lazy(() =>
   import("./views/apps/ordermanage/AllOrderLList")
 );
@@ -44,10 +82,12 @@ const AllOrderList = lazy(() =>
 const WalletTransaction = lazy(() =>
   import("./views/apps/wallet/WalletTransaction")
 );
-const CustomWallet = lazy(() =>
-  import("./views/apps/wallet/CustomWallet")
-);
+const CustomWallet = lazy(() => import("./views/apps/wallet/CustomWallet"));
 
+//Withdraw//
+const WithdrawRequest = lazy(() =>
+  import("./views/apps/Withdraw/WithdrawRequest")
+);
 //Transaction history//
 const TransactionHistory = lazy(() =>
   import("./views/apps/transaction/TransactionHistory")
@@ -100,8 +140,9 @@ const EditPrediction = lazy(() =>
 );
 
 // Chatintakeform
-const ChatInTakeList = lazy(() => import("./views/apps/chatintakeform/ChatInTakeList"));
-
+const ChatInTakeList = lazy(() =>
+  import("./views/apps/chatintakeform/ChatInTakeList")
+);
 
 // rating and review
 const RatingList = lazy(() => import("./views/apps/reviewrating/RatingList"));
@@ -115,16 +156,23 @@ const EditPlan = lazy(() => import("./views/apps/packagemanager/EditPlan"));
 const PackageOffer = lazy(() =>
   import("./views/apps/packagemanager/PackageOffer")
 );
+const PackageOfferViewOne = lazy(() =>
+  import("./views/apps/packagemanager/PackageOfferViewOne")
+);
 const UserRecharge = lazy(() =>
   import("./views/apps/packagemanager/UserRecharge")
 );
 
 const Commission = lazy(() => import("./views/apps/packagemanager/Commission"));
-const CommissionAdd = lazy(() => import("./views/apps/packagemanager/CommissionAdd"));
+const CommissionAdd = lazy(() =>
+  import("./views/apps/packagemanager/CommissionAdd")
+);
 const CommissionEdit = lazy(() =>
   import("./views/apps/packagemanager/CommissionEdit")
 );
-
+const CommissionView = lazy(() =>
+  import("./views/apps/packagemanager/CommissionView")
+);
 
 //poojaPakage//
 const AddPackage = lazy(() => import("./views/apps/poojapackage/AddPackage"));
@@ -173,6 +221,10 @@ const ViewHoroscopeCategory = lazy(() =>
 // End Horoscope Category
 
 // Start Horoscopes
+
+// const HoroscopesList = lazy(() =>
+//   import("./views/apps/horoscopes/HoroscopesList")
+// );
 const HoroscopesList = lazy(() =>
   import("./views/apps/horoscopes/HoroscopesList")
 );
@@ -188,6 +240,7 @@ const ViewHoroscopes = lazy(() =>
 // End Horoscopes
 
 const UserChatList = lazy(() => import("./views/apps/chat/UserChatList"));
+const ChatList = lazy(() => import("./views/apps/chat/ChatList"));
 
 const AstrologerProduct = lazy(() =>
   import("./views/apps/productmanager/AstrologerProduct")
@@ -530,8 +583,8 @@ const RouteConfig = ({ component: Component, fullLayout, ...rest }) => (
               fullLayout === true
                 ? context.fullLayout
                 : context.state.activeLayout === "horizontal"
-                  ? context.horizontalLayout
-                  : context.VerticalLayout;
+                ? context.horizontalLayout
+                : context.VerticalLayout;
             return (
               <LayoutTag {...props} permission={props.user}>
                 <Suspense fallback={<Spinner />}>
@@ -599,6 +652,38 @@ class AppRouter extends React.Component {
               path="/app/dashboardlist/todaycallhistory"
               component={TodayCallHistory}
             />
+            <AppRoute
+              path="/app/event/bennerPooja/bannerPoojaList"
+              component={BannerPoojaList}
+            />
+            <AppRoute
+              path="/app/event/bennerPooja/addBannerPooja"
+              component={AddBannerPooja}
+            />
+            <AppRoute
+              path="/app/event/addEvent/EventList"
+              component={EventList}
+            />
+            <AppRoute
+              path="/app/event/addEvent/AddEvent"
+              component={AddEvent}
+            />
+            <AppRoute
+              path="/app/event/bookEvent/bookEventList"
+              component={BookEventList}
+            />
+            <AppRoute
+              path="/app/event/bookEvent/addBookEvent"
+              component={AddBookEvent}
+            />
+            <AppRoute
+              path="/app/event/bookEvent/editBookEvent/:id"
+              component={EditBookEvent}
+            />
+            <AppRoute
+              path="/app/event/bookEvent/viewBookEvent/:id"
+              component={ViewBookEvent}
+            />
             {/* Astrologer */}
             {/* productmanager  */}
             <AppRoute
@@ -632,6 +717,7 @@ class AppRouter extends React.Component {
               component={ViewHoroscopes}
             />
             {/* Start Horoscopes*/}
+            <AppRoute path="/app/chat/chatList" component={ChatList} />
             <AppRoute
               path="/app/horoscopecategory/horoscopeCategoryList"
               component={HoroscopeCategoryList}
@@ -762,8 +848,16 @@ class AppRouter extends React.Component {
               component={CommissionEdit}
             />
             <AppRoute
+              path="/app/packagemanager/commissionview/:id"
+              component={CommissionView}
+            />
+            <AppRoute
               path="/app/packagemanager/packageoffer"
               component={PackageOffer}
+            />
+            <AppRoute
+              path="/app/packagemanager/packageofferViewOne/:id"
+              component={PackageOfferViewOne}
             />
             {/* poojapackage */}
             <AppRoute
@@ -773,10 +867,6 @@ class AppRouter extends React.Component {
             <AppRoute
               path="/app/poojapackage/addPackage"
               component={AddPackage}
-            />
-            <AppRoute
-              path="/app/poojapackage/editPackage"
-              component={PackageOffer}
             />
             {/* prediction */}
             <AppRoute
@@ -1007,6 +1097,31 @@ class AppRouter extends React.Component {
             <AppRoute path="/app/report/payoutlist" component={PayoutList} />
             <AppRoute path="/app/report/payoutadd" component={PayoutAdd} />
             <AppRoute path="/app/report/payoutedit" component={PayoutEdit} />
+            {/* Event */}
+            <AppRoute
+              path="/app/event/addEvent/EventList"
+              component={EventList}
+            />
+            <AppRoute
+              path="/app/event/addEvent/AddEvent"
+              component={AddEvent}
+            />
+            <AppRoute
+              path="/app/event/bookEvent/bookEventList"
+              component={BookEventList}
+            />
+            <AppRoute
+              path="/app/event/bookEvent/addBookEvent"
+              component={AddBookEvent}
+            />
+            <AppRoute
+              path="/app/event/bookEvent/editBookEvent/:id"
+              component={EditBookEvent}
+            />
+            <AppRoute
+              path="/app/event/bookEvent/viewBookEvent/:id"
+              component={ViewBookEvent}
+            />
             {/* order */}
             <AppRoute
               path="/app/ordermanage/allorderlist"
@@ -1020,6 +1135,11 @@ class AppRouter extends React.Component {
             <AppRoute
               path="/app/wallet/walletcustom"
               component={CustomWallet}
+            />
+            {/* WithdrawRequest */}
+            <AppRoute
+              path="/app/withdraw/WithdrawRequest"
+              component={WithdrawRequest}
             />
             {/* Transaction history */}
             <AppRoute

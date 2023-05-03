@@ -7,22 +7,21 @@ import {
   Col,
   Button,
   UncontrolledDropdown,
+  UncontrolledButtonDropdown,
   DropdownMenu,
   DropdownItem,
   DropdownToggle,
 } from "reactstrap";
-// import axiosConfig from "../../../axiosConfig";
-import axios from "axios";
+import axiosConfig from "../../../axiosConfig";
 import { ContextLayout } from "../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
 import { Eye, Edit, Trash2, ChevronDown } from "react-feather";
-//import classnames from "classnames";
 import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 import "../../../assets/scss/pages/users.scss";
 import { Route } from "react-router-dom";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 
-class PackageList extends React.Component {
+class WithdrawRequest extends React.Component {
   state = {
     rowData: [],
     paginationPageSize: 20,
@@ -47,60 +46,56 @@ class PackageList extends React.Component {
       },
 
       {
-        headerName: "Thumnail Image",
-        field: "thumnail",
+        headerName: "Category Name",
+        field: "category",
         filter: true,
-        width: 200,
+        width: 180,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>
-                {params.data.firstname} {params.data.lastname}
-              </span>
+              <span>{params.data.product?.category?.name}</span>
             </div>
           );
         },
       },
 
       {
-        headerName: "Title",
-        field: "title",
+        headerName: "Withdraw Request Name",
+        field: "comision_name",
         filter: true,
-        width: 200,
+        width: 180,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>
-                {params.data.firstname} {params.data.lastname}
-              </span>
+              <span>{params.data.comision_name}</span>
             </div>
           );
         },
       },
 
       {
-        headerName: "Description",
-        field: "description	",
+        headerName: "Product Name",
+        field: "productname",
         filter: true,
-        width: 200,
+        width: 120,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.email}</span>
+              <span>{params.data.product?.productname}</span>
             </div>
           );
         },
       },
 
       {
-        headerName: "Amount",
-        field: "time",
+        headerName: "Withdraw Request Rate(%)",
+        field: "commision_rate",
         filter: true,
-        width: 200,
+        width: 150,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.mobile}</span>
+              <span>{params.data.commision_rate}</span>
             </div>
           );
         },
@@ -108,20 +103,24 @@ class PackageList extends React.Component {
 
       {
         headerName: "Status",
-        field: "dateofregister",
-        filter: true,
-        width: 200,
+        field: "status",
+        // filter: true,
+        width: 100,
         cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data.mobile}</span>
+          return params.value === "Active" ? (
+            <div className="badge badge-pill badge-success">
+              {params.data.status}
             </div>
-          );
+          ) : params.value === "Inactive" ? (
+            <div className="badge badge-pill btn-primary">
+              {params.data.status}
+            </div>
+          ) : null;
         },
       },
 
       {
-        headerName: "Actions",
+        headerName: "Action",
         field: "sortorder",
         width: 200,
         cellRendererFramework: (params) => {
@@ -135,7 +134,7 @@ class PackageList extends React.Component {
                     color="green"
                     onClick={() =>
                       history.push(
-                        `/app/userride/viewUserRide/${params.data._id}`
+                        `/app/packagemanager/WithdrawRequestview/${params.data._id}`
                       )
                     }
                   />
@@ -147,7 +146,11 @@ class PackageList extends React.Component {
                     className="mr-50"
                     size="25px"
                     color="blue"
-                    onClick={() => history.push("/app/userride/editUserRide")}
+                    onClick={() =>
+                      history.push(
+                        `/app/packagemanager/WithdrawRequestedit/${params.data._id}`
+                      )
+                    }
                   />
                 )}
               />
@@ -168,36 +171,19 @@ class PackageList extends React.Component {
     ],
   };
   async componentDidMount() {
-    let { id } = this.props.match.params;
-
-    await axios
-      .get(`http://3.108.185.7:4000/user/view_onecust/${id}`)
-      .then((response) => {
-        let rowData = response.data.data;
-        console.log(rowData);
-        this.setState({ rowData });
-      });
-
-    await axios
-      .get("http://3.108.185.7:4000/admin/allcustomer")
-      .then((response) => {
-        let rowData = response.data.data;
-        console.log(rowData);
-        this.setState({ rowData });
-      });
+    await axiosConfig.get(`/admin/comisionList`).then((response) => {
+      let rowData = response.data.data;
+      console.log(rowData);
+      this.setState({ rowData });
+    });
   }
-
   async runthisfunction(id) {
     console.log(id);
-    await axios.get(`http://3.108.185.7:4000/admin/delcustomer/${id}`).then(
-      (response) => {
-        console.log(response);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    await axiosConfig.get(`/admin/dltComision/${id}`).then((response) => {
+      console.log(response);
+    });
   }
+
   onGridReady = (params) => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -226,9 +212,9 @@ class PackageList extends React.Component {
       (
         <div>
           <Breadcrumbs
-            breadCrumbTitle="All Package"
+            breadCrumbTitle="Withdraw Request "
             breadCrumbParent="Home"
-            breadCrumbActive="All Package"
+            breadCrumbActive="Withdraw List "
           />
 
           <Row className="app-user-list">
@@ -238,7 +224,7 @@ class PackageList extends React.Component {
                 <Row className="m-2">
                   <Col>
                     <h1 sm="6" className="float-left">
-                      All Package
+                      Withdraw Request List
                     </h1>
                   </Col>
                   <Col>
@@ -247,10 +233,12 @@ class PackageList extends React.Component {
                         <Button
                           className=" btn btn-success float-right"
                           onClick={() =>
-                            history.push("/app/poojapackage/addpackage")
+                            history.push(
+                              "/app/packagemanager/WithdrawRequestadd"
+                            )
                           }
                         >
-                          Add New
+                          Add
                         </Button>
                       )}
                     />
@@ -307,6 +295,18 @@ class PackageList extends React.Component {
                           </UncontrolledDropdown>
                         </div>
                         <div className="d-flex flex-wrap justify-content-between mb-1">
+                          <div className=" mr-1">
+                            <Input
+                              type="select"
+                              name="select"
+                              id="address-type"
+                            >
+                              <option>Pending</option>
+                              <option>Complete</option>
+                              <option>Reject</option>
+                            </Input>
+                          </div>
+
                           <div className="table-input mr-1">
                             <Input
                               placeholder="search..."
@@ -315,6 +315,11 @@ class PackageList extends React.Component {
                               }
                               value={this.state.value}
                             />
+                          </div>
+                          <div className="mr-1">
+                            <Button.Ripple color="primary">
+                              Show Data
+                            </Button.Ripple>
                           </div>
                           <div className="export-btn">
                             <Button.Ripple
@@ -356,4 +361,4 @@ class PackageList extends React.Component {
     );
   }
 }
-export default PackageList;
+export default WithdrawRequest;

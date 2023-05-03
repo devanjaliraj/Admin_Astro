@@ -8,25 +8,34 @@ import {
   Input,
   Label,
   Button,
-  FormGroup,
+  CustomInput,
 } from "reactstrap";
-import axiosConfig from "../../../axiosConfig";
+//import axios from "axios";
+import axiosConfig from "../../../../axiosConfig";
+// import { useParams } from "react-router-dom";
+//import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { Route } from "react-router-dom";
-import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
+import Breadcrumbs from "../../../../components/@vuexy/breadCrumbs/BreadCrumb";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { EditorState, convertToRaw } from "draft-js";
-import "../../../assets/scss/plugins/extensions/editor.scss";
 import draftToHtml from "draftjs-to-html";
+
+import { data } from "jquery";
 import swal from "sweetalert";
-export class AddHoroscopeCategory extends Component {
+export class EditBookEvent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "",
+      event_list: "",
+      price_online: "",
+      price_offline: "",
       desc: "",
       editorState: EditorState.createEmpty(),
+    };
+    this.state = {
+      eventN: [],
     };
   }
   uploadImageCallBack = (file) => {
@@ -54,6 +63,35 @@ export class AddHoroscopeCategory extends Component {
       desc: draftToHtml(convertToRaw(editorState.getCurrentContent())),
     });
   };
+
+  async componentDidMount() {
+    axiosConfig
+      .get("/admin/EventListAdmin")
+      .then((response) => {
+        console.log(response);
+        this.setState({
+          eventN: response.data.data,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    let { id } = this.props.match.params;
+    axiosConfig
+      .get(`/admin/admin_getone_event/${id}`)
+      .then((response) => {
+        console.log(response);
+        this.setState({
+          event_list: response.data.data.event_list,
+          price_online: response.data.data.price_online,
+          price_offline: response.data.data.price_offline,
+          desc: response.data.data.desc,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
   changeHandler1 = (e) => {
     this.setState({ status: e.target.value });
   };
@@ -63,15 +101,13 @@ export class AddHoroscopeCategory extends Component {
   };
   submitHandler = (e) => {
     e.preventDefault();
-
+    let { id } = this.props.match.params;
     axiosConfig
-      .post("/admin/addCategory", this.state)
-
+      // .post(`admin/editCategory/${id}`, this.state)
       .then((response) => {
-        console.log(response.data);
-
+        console.log(response);
         swal("Success!", "Submitted SuccessFull!", "success");
-        this.props.history.push("/app/horoscopecategory/horoscopeCategoryList");
+        this.props.history.push("/app/event/bookEvent/bookEventList");
       })
       .catch((error) => {
         console.log(error);
@@ -81,15 +117,15 @@ export class AddHoroscopeCategory extends Component {
     return (
       <div>
         <Breadcrumbs
-          breadCrumbTitle="Add Horoscope Category"
+          breadCrumbTitle="Add Book Event"
           breadCrumbParent=" home"
-          breadCrumbActive="Add Horoscope Category"
+          breadCrumbActive="Edit Book Event"
         />
         <Card>
           <Row className="m-2">
             <Col>
               <h1 col-sm-6 className="float-left">
-                Add Horoscope Category
+                Edit Book Event
               </h1>
             </Col>
             <Col>
@@ -98,9 +134,7 @@ export class AddHoroscopeCategory extends Component {
                   <Button
                     className=" btn btn-danger float-right"
                     onClick={() =>
-                      history.push(
-                        "/app/horoscopecategory/horoscopeCategoryList"
-                      )
+                      history.push("/app/event/bookEvent/bookEventList")
                     }
                   >
                     Back
@@ -113,19 +147,59 @@ export class AddHoroscopeCategory extends Component {
             <Form className="m-1" onSubmit={this.submitHandler}>
               <Row>
                 <Col lg="6" md="6" sm="12" className="mb-2">
-                  <Label>Title</Label>
+                  <Label> Event Title</Label>
+                  <CustomInput
+                    required
+                    type="select"
+                    name="event_list"
+                    placeholder="Enter Title"
+                    value={this.state.event_list}
+                    onChange={this.changeHandler}
+                  >
+                    <option>select Event</option>
+                    {this.state.eventN?.map((allEvent) => (
+                      <option value={allEvent?._id} key={allEvent?._id}>
+                        {allEvent?.event_name}
+                      </option>
+                    ))}
+                  </CustomInput>
+                </Col>
+
+                <Col lg="6" md="6" sm="12" className="mb-2">
+                  <Label>Price OnLine</Label>
                   <Input
                     required
                     type="text"
-                    name="title"
-                    placeholder="Enter Title"
-                    value={this.state.title}
+                    name="price_online"
+                    placeholder="Enter Price Online"
+                    value={this.state.price_online}
                     onChange={this.changeHandler}
                   ></Input>
                 </Col>
-
+                <Col lg="6" md="6" sm="12" className="mb-2">
+                  <Label>Price Offline</Label>
+                  <Input
+                    required
+                    type="text"
+                    name="price_offline"
+                    placeholder="Enter Price Offline"
+                    value={this.state.price_offline}
+                    onChange={this.changeHandler}
+                  ></Input>
+                </Col>
+                {/* <Col lg="6" md="6" sm="12" className="mb-2">
+                  <Label>Slots</Label>
+                  <Input
+                    required
+                    type="text"
+                    name="category"
+                    placeholder="Enter Category"
+                    // value={this.state.category}
+                    // onChange={this.changeHandler}
+                  ></Input>
+                </Col> */}
                 <Col lg="12" md="12" sm="12" className="mb-2">
-                  <Label> Description</Label>
+                  <Label>Event Detail</Label>
 
                   <br />
 
@@ -148,6 +222,7 @@ export class AddHoroscopeCategory extends Component {
                   />
                 </Col>
               </Row>
+
               {/* <Col lg="6" md="6" sm="6" className="mb-2">
                 <Label className="mb-1">Status</Label>
                 <div
@@ -189,4 +264,4 @@ export class AddHoroscopeCategory extends Component {
     );
   }
 }
-export default AddHoroscopeCategory;
+export default EditBookEvent;

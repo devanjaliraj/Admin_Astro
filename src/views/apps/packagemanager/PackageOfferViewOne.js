@@ -12,7 +12,8 @@ import "../../../assets/scss/pages/app-ecommerce-shop.scss";
 import { Route } from "react-router-dom";
 import axiosConfig from "../../../axiosConfig";
 import ReactHtmlParser from "react-html-parser";
-class ViewHoroscopeCategory extends React.Component {
+import axios from "axios";
+class PackageOfferViewOne extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,10 +24,9 @@ class ViewHoroscopeCategory extends React.Component {
   componentDidMount() {
     let { id } = this.props.match.params;
     axiosConfig
-      .get(`/admin/getoneCategory/${id}`)
+      .get(`/admin/viewonePackage/${id}`)
       .then((response) => {
-        // console.log(response.data);
-        console.log(response.data.data);
+        console.log("viewOne", response.data.data);
         this.setState({ data: response.data.data });
       })
       .catch((error) => {
@@ -49,11 +49,9 @@ class ViewHoroscopeCategory extends React.Component {
                     href="/app/horoscopecategory/horoscopeCategoryList"
                     tag="a"
                   >
-                    Horoscope Category List
+                    PackageOffer Category List
                   </BreadcrumbItem>
-                  <BreadcrumbItem active>
-                    View Horoscope Category
-                  </BreadcrumbItem>
+                  <BreadcrumbItem active>View PackageOffer</BreadcrumbItem>
                 </Breadcrumb>
               </div>
             </Col>
@@ -62,7 +60,7 @@ class ViewHoroscopeCategory extends React.Component {
             <Row className="m-2">
               <Col>
                 <h1 col-sm-6 className="float-left">
-                  View Horoscope Category
+                  View PackageOffer
                 </h1>
               </Col>
               <Col>
@@ -88,13 +86,25 @@ class ViewHoroscopeCategory extends React.Component {
                   <h4>Title</h4>
                   <h6 className=""> {this.state.data.title}</h6>
                 </Col>
-                {/* <Col md="6" sm="12" className="mb-4">
-                  <h4>Value</h4>
-                  <h6 className=""> {this.state.data.value}</h6>
-                </Col> */}
                 <Col md="6" sm="12" className="mb-4">
-                  <h4>Description</h4>
-                  <h6 className=""> {ReactHtmlParser(this.state.data.desc)}</h6>
+                  <h4>MRP Price</h4>
+                  <h6 className="">
+                    {ReactHtmlParser(this.state.data.mrp_price)}
+                  </h6>
+                </Col>
+                <Col md="6" sm="12" className="mb-4">
+                  <h4>Offer Price</h4>
+                  <h6 className=""> {this.state.data.offer_price}</h6>
+                </Col>
+
+                <Col md="6" sm="12" className="mb-4">
+                  <h4>Thumnail Image</h4>
+                  <img
+                    src={this.state.data.image}
+                    alt="Thumnnail_Image_missing"
+                    width={120}
+                    height={120}
+                  />
                 </Col>
               </Row>
             </CardBody>
@@ -104,4 +114,4 @@ class ViewHoroscopeCategory extends React.Component {
     );
   }
 }
-export default ViewHoroscopeCategory;
+export default PackageOfferViewOne;

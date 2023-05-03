@@ -25,6 +25,7 @@ export default class AddStartUp extends Component {
     this.state = {
       banner_title: "",
       status: "",
+      root: "",
       banner_img: "",
       selectedName: "",
       selectedFile: null,
@@ -38,6 +39,7 @@ export default class AddStartUp extends Component {
         console.log(response);
         this.setState({
           banner_title: response.data.data.banner_title,
+          root: response.data.data.root,
           status: response.data.data.status,
           banner_img: response.data.data.banner_img,
         });
@@ -64,8 +66,8 @@ export default class AddStartUp extends Component {
 
     const data = new FormData();
     data.append("banner_title", this.state.banner_title);
+    data.append("root", this.state.root);
     data.append("status", this.state.status);
-
     data.append("banner_img", this.state.selectedFile, this.state.selectedName);
 
     for (var value of data.values()) {
@@ -133,6 +135,20 @@ export default class AddStartUp extends Component {
           </Row>
           <CardBody>
             <Form className="m-1" onSubmit={this.submitHandler}>
+              <Row>
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>Routing of banner</Label>
+                  <Input
+                    required
+                    type="text"
+                    name="root"
+                    placeholder=""
+                    value={this.state.root}
+                    onChange={this.changeHandler}
+                  ></Input>
+                </Col>
+                <Col lg="6" md="6" sm="6" className="mb-2 mt-2"></Col>
+              </Row>
               <Row>
                 <Col lg="6" md="6" sm="6" className="mb-2">
                   <Label>Title</Label>

@@ -133,7 +133,6 @@ class ViewHoroscopes extends React.Component {
                 <Col md="6" sm="12" className="mb-4">
                   <h4>Long Description</h4>
                   <h6 className="">
-                    {" "}
                     {ReactHtmlParser(this.state.data.long_desc)}
                   </h6>
                 </Col>

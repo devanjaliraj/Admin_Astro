@@ -48,13 +48,11 @@ class Commission extends React.Component {
         headerName: "Category Name",
         field: "category",
         filter: true,
-        width: 200,
+        width: 180,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>
-                {params.data.product?.category?.name}
-              </span>
+              <span>{params.data.product?.category?.name}</span>
             </div>
           );
         },
@@ -64,7 +62,7 @@ class Commission extends React.Component {
         headerName: "Commission Name",
         field: "comision_name",
         filter: true,
-        width: 200,
+        width: 180,
         cellRendererFramework: (params) => {
           return (
             <div>
@@ -78,7 +76,7 @@ class Commission extends React.Component {
         headerName: "Product Name",
         field: "productname",
         filter: true,
-        width: 200,
+        width: 120,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
@@ -92,7 +90,7 @@ class Commission extends React.Component {
         headerName: "Commission Rate(%)",
         field: "comision_rate",
         filter: true,
-        width: 200,
+        width: 150,
         cellRendererFramework: (params) => {
           return (
             <div>
@@ -106,14 +104,14 @@ class Commission extends React.Component {
         headerName: "Status",
         field: "status",
         // filter: true,
-        width: 130,
+        width: 100,
         cellRendererFramework: (params) => {
           return params.value === "Active" ? (
             <div className="badge badge-pill badge-success">
               {params.data.status}
             </div>
-          ) : params.value === "Deactive" ? (
-            <div className="badge badge-pill badge-warning">
+          ) : params.value === "Inactive" ? (
+            <div className="badge badge-pill btn-primary">
               {params.data.status}
             </div>
           ) : null;
@@ -135,7 +133,7 @@ class Commission extends React.Component {
                     color="green"
                     onClick={() =>
                       history.push(
-                        `/app/userride/viewUserRide/${params.data._id}`
+                        `/app/packagemanager/commissionview/${params.data._id}`
                       )
                     }
                   />
@@ -147,7 +145,11 @@ class Commission extends React.Component {
                     className="mr-50"
                     size="25px"
                     color="blue"
-                    onClick={() => history.push(`/app/packagemanager/commissionedit/${params.data._id}`)}
+                    onClick={() =>
+                      history.push(
+                        `/app/packagemanager/commissionedit/${params.data._id}`
+                      )
+                    }
                   />
                 )}
               />
@@ -168,15 +170,11 @@ class Commission extends React.Component {
     ],
   };
   async componentDidMount() {
-
-    await axiosConfig.get(`/admin/comisionList`)
-      .then((response) => {
-        let rowData = response.data.data;
-        console.log(rowData);
-        this.setState({ rowData });
-      });
-
-
+    await axiosConfig.get(`/admin/comisionList`).then((response) => {
+      let rowData = response.data.data;
+      console.log(rowData);
+      this.setState({ rowData });
+    });
   }
   async runthisfunction(id) {
     console.log(id);
@@ -253,14 +251,14 @@ class Commission extends React.Component {
                               {this.gridApi
                                 ? this.state.currenPageSize
                                 : "" * this.state.getPageSize -
-                                (this.state.getPageSize - 1)}{" "}
+                                  (this.state.getPageSize - 1)}{" "}
                               -{" "}
                               {this.state.rowData.length -
                                 this.state.currenPageSize *
-                                this.state.getPageSize >
-                                0
+                                  this.state.getPageSize >
+                              0
                                 ? this.state.currenPageSize *
-                                this.state.getPageSize
+                                  this.state.getPageSize
                                 : this.state.rowData.length}{" "}
                               of {this.state.rowData.length}
                               <ChevronDown className="ml-50" size={15} />

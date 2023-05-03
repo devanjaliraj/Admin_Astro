@@ -202,7 +202,8 @@ class BundleOffer extends React.Component {
                       history.push(`/app/coupons/editCoupon/${params.data._id}`)
                     }
                   />
-                )} />
+                )}
+              />
               <Trash2
                 size={15}
                 color="red"
@@ -220,13 +221,11 @@ class BundleOffer extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig
-      .get("/getcoupon")
-      .then((response) => {
-        let rowData = response.data.data;
-        console.log(rowData);
-        this.setState({ rowData });
-      });
+    await axiosConfig.get("/getcoupon").then((response) => {
+      let rowData = response.data.data;
+      console.log(rowData);
+      this.setState({ rowData });
+    });
   }
 
   async runthisfunction(id) {
@@ -284,12 +283,13 @@ class BundleOffer extends React.Component {
                   <Route
                     render={({ history }) => (
                       <Button
-                        className=" btn btn-danger float-right"
+                        className=" btn btn-success float-right"
                         onClick={() => history.push("/app/coupons/addcoupons")}
                       >
                         Add New Coupons
                       </Button>
-                    )} />
+                    )}
+                  />
                 </Col>
               </Row>
               <CardBody>
@@ -302,14 +302,14 @@ class BundleOffer extends React.Component {
                             {this.gridApi
                               ? this.state.currenPageSize
                               : "" * this.state.getPageSize -
-                              (this.state.getPageSize - 1)}{" "}
+                                (this.state.getPageSize - 1)}{" "}
                             -{" "}
                             {this.state.rowData.length -
                               this.state.currenPageSize *
-                              this.state.getPageSize >
-                              0
+                                this.state.getPageSize >
+                            0
                               ? this.state.currenPageSize *
-                              this.state.getPageSize
+                                this.state.getPageSize
                               : this.state.rowData.length}{" "}
                             of {this.state.rowData.length}
                             <ChevronDown className="ml-50" size={15} />

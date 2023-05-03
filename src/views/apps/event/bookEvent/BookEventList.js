@@ -11,18 +11,20 @@ import {
   DropdownItem,
   DropdownToggle,
 } from "reactstrap";
-// import axiosConfig from "../../../axiosConfig";
-import axios from "axios";
-import { ContextLayout } from "../../../utility/context/Layout";
+import ReactHtmlParser from "react-html-parser";
+
+import axiosConfig from "../../../../axiosConfig";
+// import axios from "axios";
+import { ContextLayout } from "../../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
 import { Eye, Edit, Trash2, ChevronDown } from "react-feather";
 //import classnames from "classnames";
-import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
-import "../../../assets/scss/pages/users.scss";
+import "../../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
+import "../../../../assets/scss/pages/users.scss";
 import { Route } from "react-router-dom";
-import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
+import Breadcrumbs from "../../../../components/@vuexy/breadCrumbs/BreadCrumb";
 
-class PackageList extends React.Component {
+class BookEventList extends React.Component {
   state = {
     rowData: [],
     paginationPageSize: 20,
@@ -41,87 +43,172 @@ class PackageList extends React.Component {
         field: "node.rowIndex + 1",
         width: 100,
         filter: true,
-        // checkboxSelection: true,
-        // headerCheckboxSelectionFilteredOnly: true,
-        // headerCheckboxSelection: true,
       },
 
       {
-        headerName: "Thumnail Image",
-        field: "thumnail",
+        headerName: "Name of Pooja",
+        field: "customername",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>
-                {params.data.firstname} {params.data.lastname}
-              </span>
+              <span>{params.data.pooja_type?.pooja_name}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Image",
+        field: "poojaimg",
+        filter: false,
+        width: 120,
+        setColumnVisible: false,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              {params.data.poojaimg.map((i) => (
+                <img
+                  className=" rounded-circle  mr-3"
+                  src={i}
+                  alt="user avatar"
+                  height="40"
+                  width="40"
+                />
+              ))}
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Pooja Price",
+        field: "pooja_price",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data.pooja_price}</span>
             </div>
           );
         },
       },
 
       {
-        headerName: "Title",
-        field: "title",
-        filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>
-                {params.data.firstname} {params.data.lastname}
-              </span>
-            </div>
-          );
-        },
-      },
-
-      {
-        headerName: "Description",
-        field: "description	",
+        headerName: "About Puja",
+        field: "desc",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.email}</span>
+              <span>{ReactHtmlParser(params.data.desc)}</span>
             </div>
           );
         },
       },
-
       {
-        headerName: "Amount",
-        field: "time",
+        headerName: "City",
+        field: "city",
         filter: true,
-        width: 200,
+        width: 150,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.mobile}</span>
+              <span>{params.data.city}</span>
             </div>
           );
         },
       },
 
       {
-        headerName: "Status",
-        field: "dateofregister",
+        headerName: "Location  ",
+        field: "location",
         filter: true,
-        width: 200,
+        width: 150,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.mobile}</span>
+              <span>{params.data.location}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Current Location  ",
+        field: "fullfill_location",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data.fullfill_location}</span>
             </div>
           );
         },
       },
 
       {
-        headerName: "Actions",
+        headerName: "Benefits  ",
+        field: "benefits",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data.benefits}</span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "Duration  ",
+        field: "duration",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data.duration}</span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "Time Slot  ",
+        field: "time_slots",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data.time_slots}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Live Streaming",
+        field: "liveStreaming",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return params.data.liveStreaming === true ? (
+            <div className="badge badge-pill badge-success">
+              <span>{"Available"}</span>
+            </div>
+          ) : (
+            <div className="badge badge-pill badge-warning">
+              <span>{"Unavailable"}</span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "Action",
         field: "sortorder",
         width: 200,
         cellRendererFramework: (params) => {
@@ -135,7 +222,7 @@ class PackageList extends React.Component {
                     color="green"
                     onClick={() =>
                       history.push(
-                        `/app/userride/viewUserRide/${params.data._id}`
+                        `/app/event/bookEvent/viewBookEvent/${params.data._id}`
                       )
                     }
                   />
@@ -147,7 +234,11 @@ class PackageList extends React.Component {
                     className="mr-50"
                     size="25px"
                     color="blue"
-                    onClick={() => history.push("/app/userride/editUserRide")}
+                    onClick={() =>
+                      history.push(
+                        `/app/event/bookEvent/editBookEvent/${params.data._id}`
+                      )
+                    }
                   />
                 )}
               />
@@ -168,28 +259,18 @@ class PackageList extends React.Component {
     ],
   };
   async componentDidMount() {
-    let { id } = this.props.match.params;
+    // let { id } = this.props.match.params;
 
-    await axios
-      .get(`http://3.108.185.7:4000/user/view_onecust/${id}`)
-      .then((response) => {
-        let rowData = response.data.data;
-        console.log(rowData);
-        this.setState({ rowData });
-      });
-
-    await axios
-      .get("http://3.108.185.7:4000/admin/allcustomer")
-      .then((response) => {
-        let rowData = response.data.data;
-        console.log(rowData);
-        this.setState({ rowData });
-      });
+    await axiosConfig.get(`/admin/get_adminevent`).then((response) => {
+      let rowData = response.data.data;
+      console.log(rowData);
+      this.setState({ rowData });
+    });
   }
 
   async runthisfunction(id) {
     console.log(id);
-    await axios.get(`http://3.108.185.7:4000/admin/delcustomer/${id}`).then(
+    await axiosConfig.get(`/admin/admin_dlt_event/${id}`).then(
       (response) => {
         console.log(response);
       },
@@ -226,9 +307,9 @@ class PackageList extends React.Component {
       (
         <div>
           <Breadcrumbs
-            breadCrumbTitle="All Package"
+            breadCrumbTitle="Puja Type"
             breadCrumbParent="Home"
-            breadCrumbActive="All Package"
+            breadCrumbActive="Puja Type List"
           />
 
           <Row className="app-user-list">
@@ -238,7 +319,7 @@ class PackageList extends React.Component {
                 <Row className="m-2">
                   <Col>
                     <h1 sm="6" className="float-left">
-                      All Package
+                      Puja Type List
                     </h1>
                   </Col>
                   <Col>
@@ -247,10 +328,10 @@ class PackageList extends React.Component {
                         <Button
                           className=" btn btn-success float-right"
                           onClick={() =>
-                            history.push("/app/poojapackage/addpackage")
+                            history.push("/app/event/bookEvent/addBookEvent")
                           }
                         >
-                          Add New
+                          Add
                         </Button>
                       )}
                     />
@@ -356,4 +437,4 @@ class PackageList extends React.Component {
     );
   }
 }
-export default PackageList;
+export default BookEventList;

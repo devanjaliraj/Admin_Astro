@@ -86,7 +86,7 @@ class BannerList extends React.Component {
         headerName: "Banner Image",
         field: "banner_img",
         filter: false,
-        width: 350,
+        width: 250,
         setColumnVisible: false,
         cellRendererFramework: (params) => {
           return (
@@ -102,6 +102,16 @@ class BannerList extends React.Component {
               ))}
             </div>
           );
+        },
+      },
+      {
+        headerName: "Banner Route",
+        field: "root",
+        filter: false,
+        width: 150,
+        setColumnVisible: false,
+        cellRendererFramework: (params) => {
+          return <span>{params.data.root}</span>;
         },
       },
       {

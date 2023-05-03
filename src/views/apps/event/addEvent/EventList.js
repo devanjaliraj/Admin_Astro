@@ -11,18 +11,17 @@ import {
   DropdownItem,
   DropdownToggle,
 } from "reactstrap";
-// import axiosConfig from "../../../axiosConfig";
-import axios from "axios";
-import { ContextLayout } from "../../../utility/context/Layout";
+import axiosConfig from "../../../../axiosConfig";
+// import axios from "axios";
+import { ContextLayout } from "../../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
-import { Eye, Edit, Trash2, ChevronDown } from "react-feather";
-//import classnames from "classnames";
-import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
-import "../../../assets/scss/pages/users.scss";
+import { Edit, Trash2, ChevronDown } from "react-feather";
+import "../../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
+import "../../../../assets/scss/pages/users.scss";
 import { Route } from "react-router-dom";
-import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
+import Breadcrumbs from "../../../../components/@vuexy/breadCrumbs/BreadCrumb";
 
-class PackageList extends React.Component {
+class EventList extends React.Component {
   state = {
     rowData: [],
     paginationPageSize: 20,
@@ -47,87 +46,42 @@ class PackageList extends React.Component {
       },
 
       {
-        headerName: "Thumnail Image",
-        field: "thumnail",
+        headerName: "Pooja Type",
+        field: "pooja_name",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>
-                {params.data.firstname} {params.data.lastname}
-              </span>
+              <span>{params.data.pooja_name}</span>
             </div>
           );
         },
       },
 
       {
-        headerName: "Title",
-        field: "title",
+        headerName: "Time",
+        field: "createdAt",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>
-                {params.data.firstname} {params.data.lastname}
-              </span>
+              {" "}
+              <span>{params.data.createdAt}</span>{" "}
             </div>
           );
         },
       },
 
       {
-        headerName: "Description",
-        field: "description	",
-        filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.email}</span>
-            </div>
-          );
-        },
-      },
-
-      {
-        headerName: "Amount",
-        field: "time",
-        filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data.mobile}</span>
-            </div>
-          );
-        },
-      },
-
-      {
-        headerName: "Status",
-        field: "dateofregister",
-        filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data.mobile}</span>
-            </div>
-          );
-        },
-      },
-
-      {
-        headerName: "Actions",
+        headerName: "Action",
         field: "sortorder",
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
-              <Route
+              {/* <Route
                 render={({ history }) => (
                   <Eye
                     className="mr-50"
@@ -140,17 +94,19 @@ class PackageList extends React.Component {
                     }
                   />
                 )}
-              />
-              <Route
+              /> */}
+              {/* <Route
                 render={({ history }) => (
                   <Edit
                     className="mr-50"
                     size="25px"
                     color="blue"
-                    onClick={() => history.push("/app/userride/editUserRide")}
+                    onClick={() =>
+                      history.push("/app/event/addEvent/editEvent")
+                    }
                   />
                 )}
-              />
+              /> */}
               <Trash2
                 className="mr-50"
                 size="25px"
@@ -168,28 +124,18 @@ class PackageList extends React.Component {
     ],
   };
   async componentDidMount() {
-    let { id } = this.props.match.params;
+    // let { id } = this.props.match.params;
 
-    await axios
-      .get(`http://3.108.185.7:4000/user/view_onecust/${id}`)
-      .then((response) => {
-        let rowData = response.data.data;
-        console.log(rowData);
-        this.setState({ rowData });
-      });
-
-    await axios
-      .get("http://3.108.185.7:4000/admin/allcustomer")
-      .then((response) => {
-        let rowData = response.data.data;
-        console.log(rowData);
-        this.setState({ rowData });
-      });
+    await axiosConfig.get(`/admin/admin_poojaList`).then((response) => {
+      let rowData = response.data.data;
+      console.log(rowData);
+      this.setState({ rowData });
+    });
   }
 
   async runthisfunction(id) {
     console.log(id);
-    await axios.get(`http://3.108.185.7:4000/admin/delcustomer/${id}`).then(
+    await axiosConfig.get(`/admin/dlt_eventList/${id}`).then(
       (response) => {
         console.log(response);
       },
@@ -226,9 +172,9 @@ class PackageList extends React.Component {
       (
         <div>
           <Breadcrumbs
-            breadCrumbTitle="All Package"
+            breadCrumbTitle="Puja"
             breadCrumbParent="Home"
-            breadCrumbActive="All Package"
+            breadCrumbActive="Puja List"
           />
 
           <Row className="app-user-list">
@@ -238,7 +184,7 @@ class PackageList extends React.Component {
                 <Row className="m-2">
                   <Col>
                     <h1 sm="6" className="float-left">
-                      All Package
+                      Puja List
                     </h1>
                   </Col>
                   <Col>
@@ -247,10 +193,10 @@ class PackageList extends React.Component {
                         <Button
                           className=" btn btn-success float-right"
                           onClick={() =>
-                            history.push("/app/poojapackage/addpackage")
+                            history.push("/app/event/addEvent/addEvent")
                           }
                         >
-                          Add New
+                          Add
                         </Button>
                       )}
                     />
@@ -356,4 +302,4 @@ class PackageList extends React.Component {
     );
   }
 }
-export default PackageList;
+export default EventList;

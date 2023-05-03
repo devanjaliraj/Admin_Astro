@@ -24,6 +24,7 @@ export default class EditNotifi extends Component {
     super(props);
     this.state = {
       banner_title: "",
+      root: "",
       status: "",
       banner_img: "",
       selectedName: "",
