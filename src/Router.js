@@ -8,6 +8,12 @@ import knowledgeBaseCategory from "./views/pages/knowledge-base/Category";
 import knowledgeBaseQuestion from "./views/pages/knowledge-base/Questions";
 import { ContextLayout } from "./utility/context/Layout";
 
+// socialMedia
+const SocialMedia = lazy(() => import("./views/apps/socialmedia/SocialMedia"));
+const EditSocialMedia = lazy(() =>
+  import("./views/apps/socialmedia/EditSocialMedia")
+);
+
 // event
 const BannerPoojaList = lazy(() =>
   import("./views/apps/event/bennerPooja/BannerPoojaList")
@@ -679,6 +685,11 @@ class AppRouter extends React.Component {
             <AppRoute
               path="/app/event/bookEvent/editBookEvent/:id"
               component={EditBookEvent}
+            />
+            <AppRoute path="/app/media/socialmedia" component={SocialMedia} />
+            <AppRoute
+              path="/app/media/editsocialmedia/:id"
+              component={EditSocialMedia}
             />
             <AppRoute
               path="/app/event/bookEvent/viewBookEvent/:id"

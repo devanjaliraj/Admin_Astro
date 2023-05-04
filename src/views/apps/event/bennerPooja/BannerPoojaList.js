@@ -49,7 +49,7 @@ class BannerPoojaList extends React.Component {
         headerName: "Title",
         field: "title",
         filter: true,
-        width: 200,
+        width: 290,
         cellRendererFramework: (params) => {
           return (
             <div>
@@ -62,7 +62,7 @@ class BannerPoojaList extends React.Component {
         headerName: "Image",
         field: "img",
         filter: false,
-        width: 120,
+        width: 220,
         setColumnVisible: false,
         cellRendererFramework: (params) => {
           return (
@@ -84,7 +84,7 @@ class BannerPoojaList extends React.Component {
       {
         headerName: "Action",
         field: "sortorder",
-        width: 200,
+        width: 250,
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">

@@ -275,6 +275,14 @@ const navigationConfig = [
       },
     ],
   },
+  {
+    id: "socialmedia",
+    title: "Social Media",
+    type: "item",
+    icon: <Icon.DollarSign size={20} />,
+    permissions: ["admin", "editor"],
+    navLink: "/app/media/socialmedia",
+  },
 
   {
     type: "groupHeader",
