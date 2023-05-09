@@ -22,7 +22,7 @@ class SidebarHeader extends Component {
 
                </div> */}
               {/* <img src={logo} alt="logo" width= "50px" style={{width:"150"}}/> */}
-              <h2 className="brand-text mb-0">Astrogyata</h2>
+              <h2 className="brand-text mb-0">Astologically </h2>
             </NavLink>
           </li>
           <li className="nav-item nav-toggle">

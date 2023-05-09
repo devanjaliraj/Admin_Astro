@@ -280,7 +280,6 @@ class AstrologerList extends React.Component {
       console.log(rowData);
       this.setState({ rowData });
     });
-   
   }
 
   async runthisfunction(id) {
