@@ -196,7 +196,7 @@ class PackageOffer extends React.Component {
     //   });
 
     await axios
-      .get("http://65.2.148.70:8000/admin/getPackage")
+      .get("http://65.2.175.154:8000/admin/getPackage")
       .then((response) => {
         let rowData = response.data.data;
         this.setState({ rowData });

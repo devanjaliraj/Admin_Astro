@@ -38,7 +38,7 @@ const NavbarUser = () => {
         //axiosConfig.get(`/dlt_startup/${id}`)
         let userId = localStorage.getItem("userId");
         const data = await axiosConfig.get(
-          `/admin/viewoneadmin/632d768e9b3a6f64695e1141`
+          `/admin/viewoneadmin/64535cc3c84d5b23e0102d4f`
         );
         // /admin/viewoneadmin/${userId}
         console.log(data.data.data);

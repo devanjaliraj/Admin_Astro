@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 import {
   Card,
   CardBody,
@@ -9,129 +9,129 @@ import {
   Label,
   Button,
   CustomInput,
-} from 'reactstrap'
-import draftToHtml from 'draftjs-to-html'
-import { Editor } from 'react-draft-wysiwyg'
-import { EditorState, convertToRaw } from 'draft-js'
-import axiosConfig from '../../../../axiosConfig'
-import 'react-toastify/dist/ReactToastify.css'
-import { Route } from 'react-router-dom'
-import Breadcrumbs from '../../../../components/@vuexy/breadCrumbs/BreadCrumb'
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-import '../../../../assets/scss/plugins/extensions/editor.scss'
-import { data } from 'jquery'
+} from "reactstrap";
+import draftToHtml from "draftjs-to-html";
+import { Editor } from "react-draft-wysiwyg";
+import { EditorState, convertToRaw } from "draft-js";
+import axiosConfig from "../../../../axiosConfig";
+import "react-toastify/dist/ReactToastify.css";
+import { Route } from "react-router-dom";
+import Breadcrumbs from "../../../../components/@vuexy/breadCrumbs/BreadCrumb";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import "../../../../assets/scss/plugins/extensions/editor.scss";
+import { data } from "jquery";
 export class AddProduct extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      title: '',
-      productname: '',
-      category: '',
-      image: '',
-      desc: '',
-      price: '',
-      limit: '',
+      title: "",
+      productname: "",
+      category: "",
+      image: "",
+      desc: "",
+      price: "",
+      limit: "",
       selectedFile: undefined,
-      selectedName: '',
-      status: '',
+      selectedName: "",
+      status: "",
       editorState: EditorState.createEmpty(),
-    }
+    };
     this.state = {
       categoryP: [],
-    }
+    };
   }
 
   onChangeHandler = (event) => {
-    this.setState({ selectedFile: event.target.files[0] })
-    this.setState({ selectedName: event.target.files[0].name })
-    console.log(event.target.files[0])
-  }
+    this.setState({ selectedFile: event.target.files[0] });
+    this.setState({ selectedName: event.target.files[0].name });
+    console.log(event.target.files[0]);
+  };
   onChangeHandler = (event) => {
-    this.setState({ selectedFile: event.target.files })
-    this.setState({ selectedName: event.target.files.name })
-    console.log(event.target.files)
-  }
+    this.setState({ selectedFile: event.target.files });
+    this.setState({ selectedName: event.target.files.name });
+    console.log(event.target.files);
+  };
   uploadImageCallBack = (file) => {
     return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest()
-      xhr.open('POST', 'https://api.imgur.com/3/image')
-      xhr.setRequestHeader('Authorization', 'Client-ID 7e1c3e366d22aa3')
-      const data = new FormData()
-      data.append('image', file)
-      xhr.send(data)
-      xhr.addEventListener('load', () => {
-        const response = JSON.parse(xhr.responseText)
-        resolve(response)
-      })
-      xhr.addEventListener('error', () => {
-        const error = JSON.parse(xhr.responseText)
-        reject(error)
-      })
-    })
-  }
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", "https://api.imgur.com/3/image");
+      xhr.setRequestHeader("Authorization", "Client-ID 7e1c3e366d22aa3");
+      const data = new FormData();
+      data.append("image", file);
+      xhr.send(data);
+      xhr.addEventListener("load", () => {
+        const response = JSON.parse(xhr.responseText);
+        resolve(response);
+      });
+      xhr.addEventListener("error", () => {
+        const error = JSON.parse(xhr.responseText);
+        reject(error);
+      });
+    });
+  };
 
   onEditorStateChange = (editorState) => {
     this.setState({
       editorState,
       desc: draftToHtml(convertToRaw(editorState.getCurrentContent())),
-    })
-  }
+    });
+  };
 
   changeHandler1 = (e) => {
-    this.setState({ status: e.target.value })
-  }
+    this.setState({ status: e.target.value });
+  };
 
   changeHandler = (e) => {
-    this.setState({ [e.target.name]: e.target.value })
-  }
+    this.setState({ [e.target.name]: e.target.value });
+  };
   async componentDidMount() {
     axiosConfig
-      .get('/admin/getproductcalegory')
+      .get("/admin/getproductcalegory")
       .then((response) => {
-        console.log(response)
+        console.log(response);
         this.setState({
           categoryP: response.data.data,
-        })
+        });
       })
       .catch((error) => {
-        console.log(error)
-      })
+        console.log(error);
+      });
   }
   submitHandler = (e) => {
-    e.preventDefault()
-    const data = new FormData()
-    data.append('title', this.state.title)
-    data.append('productname', this.state.productname)
-    data.append('category', this.state.category)
-    data.append('desc', this.state.desc)
-    data.append('price', this.state.price)
-    data.append('limit', this.state.limit)
+    e.preventDefault();
+    const data = new FormData();
+    data.append("title", this.state.title);
+    data.append("productname", this.state.productname);
+    data.append("category", this.state.category);
+    data.append("desc", this.state.desc);
+    data.append("price", this.state.price);
+    data.append("limit", this.state.limit);
 
-    data.append('status', this.state.status)
+    data.append("status", this.state.status);
 
     for (const file of this.state.selectedFile) {
       if (this.state.selectedFile !== null) {
-        data.append('image', file, file.name)
+        data.append("image", file, file.name);
       }
     }
     for (var value of data.values()) {
-      console.log(value)
+      console.log(value);
     }
     for (var key of data.keys()) {
-      console.log(key)
+      console.log(key);
     }
 
     axiosConfig
       .post(`/admin/addProduct`, data)
       .then((response) => {
-        console.log(response.data)
-        alert('Product Added Successful')
-        this.props.history.push('/app/productmanager/product/productList')
+        console.log(response.data);
+        alert("Product Added Successful");
+        this.props.history.push("/app/productmanager/product/productList");
       })
       .catch((error) => {
-        console.log(error)
-      })
-  }
+        console.log(error);
+      });
+  };
 
   render() {
     return (
@@ -154,7 +154,7 @@ export class AddProduct extends Component {
                   <Button
                     className=" btn btn-danger float-right"
                     onClick={() =>
-                      history.push('/app/productmanager/product/productList')
+                      history.push("/app/productmanager/product/productList")
                     }
                   >
                     Back
@@ -289,20 +289,20 @@ export class AddProduct extends Component {
                   onChange={(e) => this.changeHandler1(e)}
                 >
                   <input
-                    style={{ marginRight: '3px' }}
+                    style={{ marginRight: "3px" }}
                     type="radio"
                     name="status"
                     value="Active"
                   />
-                  <span style={{ marginRight: '20px' }}>Active</span>
+                  <span style={{ marginRight: "20px" }}>Active</span>
 
                   <input
-                    style={{ marginRight: '3px' }}
+                    style={{ marginRight: "3px" }}
                     type="radio"
                     name="status"
                     value="Inactive"
                   />
-                  <span style={{ marginRight: '3px' }}>Inactive</span>
+                  <span style={{ marginRight: "3px" }}>Inactive</span>
                 </div>
               </Col>
               <Row>
@@ -320,7 +320,7 @@ export class AddProduct extends Component {
           </CardBody>
         </Card>
       </div>
-    )
+    );
   }
 }
-export default AddProduct
+export default AddProduct;
