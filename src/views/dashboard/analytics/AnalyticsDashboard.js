@@ -253,7 +253,7 @@ class AnalyticsDashboard extends React.Component {
           <hr></hr>
           <CardBody>
             <Row className="match-height">
-              <Col md="4">
+              <Col md="4" className="mt-1 mb-1">
                 <div className="bg-s">
                   <span className="ast-1">
                     <Icon.PhoneCall size={40} className="mr-50" />
@@ -264,7 +264,7 @@ class AnalyticsDashboard extends React.Component {
                   </h2>
                 </div>
               </Col>
-              <Col md="4">
+              <Col md="4" className="mt-1 mb-1">
                 <div className="bg-p">
                   <span className="ast-1">
                     <Icon.PhoneCall size={40} className="mr-50" />
@@ -275,7 +275,7 @@ class AnalyticsDashboard extends React.Component {
                   </h2>
                 </div>
               </Col>
-              <Col md="4">
+              <Col md="4" className="mt-1 mb-1">
                 <div className="bg-u">
                   <span className="ast-1">
                     <Icon.PhoneCall size={40} className="mr-50" />
@@ -297,7 +297,7 @@ class AnalyticsDashboard extends React.Component {
           <hr></hr>
           <CardBody>
             <Row className="match-height">
-              <Col md="4">
+              <Col md="4" className="mt-1 mb-1">
                 <div className="bg-s">
                   <span className="ast-1">
                     <Icon.DollarSign size={40} className="mr-50" />
@@ -308,7 +308,7 @@ class AnalyticsDashboard extends React.Component {
                   </h2>
                 </div>
               </Col>
-              <Col md="4">
+              <Col md="4" className="mt-1 mb-1">
                 <div className="bg-p">
                   <span className="ast-1">
                     <Icon.DollarSign size={40} className="mr-50" />
@@ -319,7 +319,7 @@ class AnalyticsDashboard extends React.Component {
                   </h2>
                 </div>
               </Col>
-              <Col md="4">
+              <Col md="4" className="mt-1 mb-1">
                 <div className="bg-u">
                   <span className="ast-1">
                     <Icon.DollarSign size={40} className="mr-50" />
@@ -341,7 +341,7 @@ class AnalyticsDashboard extends React.Component {
           <hr></hr>
           <CardBody>
             <Row className="match-height">
-              <Col md="4">
+              <Col md="4" className="mt-1 mb-1">
                 <div className="bg-s">
                   <span className="ast-1">
                     <Icon.Gift size={40} className="mr-50" />
@@ -352,7 +352,7 @@ class AnalyticsDashboard extends React.Component {
                   </h2>
                 </div>
               </Col>
-              <Col md="4">
+              <Col md="4" className="mt-1 mb-1">
                 <div className="bg-p">
                   <span className="ast-1">
                     <Icon.CheckCircle size={40} className="mr-50" />
@@ -363,7 +363,7 @@ class AnalyticsDashboard extends React.Component {
                   </h2>
                 </div>
               </Col>
-              <Col md="4">
+              <Col md="4" className="mt-1 mb-1">
                 <div className="bg-u">
                   <span className="ast-1">
                     <Icon.Package size={40} className="mr-50" />

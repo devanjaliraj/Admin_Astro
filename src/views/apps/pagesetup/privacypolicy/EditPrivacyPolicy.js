@@ -31,6 +31,7 @@ export default class EditPrivacyPolicy extends Component {
     this.state = {
       title: "",
       desc: "",
+      editorState: "",
       editorState: EditorState.createEmpty(),
     };
   }
@@ -64,12 +65,9 @@ export default class EditPrivacyPolicy extends Component {
     axiosConfig
       .get(`/admin/getonePrivcyPlcy/${id}`)
       .then((response) => {
-        console.log(response);
-        this.setState({
-          title: response.data.data.title,
-
-          desc: response.data.data.desc,
-        });
+        console.log(response.data.data);
+        this.setState({ title: response.data.data.title });
+        // this.setState({ editorState: response.data.data.desc });
       })
       .catch((error) => {
         console.log(error);
