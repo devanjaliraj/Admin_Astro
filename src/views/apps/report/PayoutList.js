@@ -21,6 +21,7 @@ import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 import "../../../assets/scss/pages/users.scss";
 import { Route } from "react-router-dom";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
+import axiosConfig from "../../../axiosConfig";
 
 class PayoutList extends React.Component {
   state = {
@@ -48,13 +49,13 @@ class PayoutList extends React.Component {
 
       {
         headerName: "Astrologer Name",
-        field: "astrologername",
+        field: "fullname",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.email}</span>
+              <span>{params.data?.astroId?.fullname}</span>
             </div>
           );
         },
@@ -62,13 +63,13 @@ class PayoutList extends React.Component {
 
       {
         headerName: "Mobile No.",
-        field: "astrologername",
+        field: "mobile",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.email}</span>
+              <span>{params.data?.astroId?.mobile}</span>
             </div>
           );
         },
@@ -82,21 +83,21 @@ class PayoutList extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.mobile}</span>
+              <span>{params.data?.updatedAt.split("T")[0]}</span>
             </div>
           );
         },
       },
 
       {
-        headerName: "Request Amount",
-        field: "reason",
+        headerName: "Amount",
+        field: "payout_amt",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.mobile}</span>
+              <span>{params.data?.payout_amt}</span>
             </div>
           );
         },
@@ -104,13 +105,13 @@ class PayoutList extends React.Component {
 
       {
         headerName: "Transaction ID",
-        field: "reason",
+        field: "transactionId",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.mobile}</span>
+              <span>{params.data?.transactionId}</span>
             </div>
           );
         },
@@ -124,7 +125,7 @@ class PayoutList extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.mobile}</span>
+              <span>{params.data?.astroId?.callCharge}</span>
             </div>
           );
         },
@@ -132,13 +133,13 @@ class PayoutList extends React.Component {
 
       {
         headerName: "Status",
-        field: "reason",
+        field: "status",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.mobile}</span>
+              <span>{params.data.status}</span>
             </div>
           );
         },
@@ -192,23 +193,13 @@ class PayoutList extends React.Component {
     ],
   };
   async componentDidMount() {
-    let { id } = this.props.match.params;
+    // let { id } = this.props.match.params;
 
-    await axios
-      .get(`http://3.108.185.7:4000/user/view_onecust/${id}`)
-      .then((response) => {
-        let rowData = response.data.data;
-        console.log(rowData);
-        this.setState({ rowData });
-      });
-
-    await axios
-      .get("http://3.108.185.7:4000/admin/allcustomer")
-      .then((response) => {
-        let rowData = response.data.data;
-        console.log(rowData);
-        this.setState({ rowData });
-      });
+    await axiosConfig.get(`/user/PayoutList`).then((response) => {
+      let rowData = response.data.data;
+      console.log(rowData);
+      this.setState({ rowData });
+    });
   }
 
   async runthisfunction(id) {

@@ -17,15 +17,12 @@ import axiosConfig from "../../../axiosConfig";
 import "react-toastify/dist/ReactToastify.css";
 import { Route } from "react-router-dom";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
-import { EditorState } from "draft-js"
-import { data } from "jquery";
+
 import swal from "sweetalert";
-import { Editor } from "react-draft-wysiwyg"
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css"
-import "../../../assets/scss/plugins/extensions/editor.scss"
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import "../../../assets/scss/plugins/extensions/editor.scss";
 
 export class EditRashi extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -35,24 +32,21 @@ export class EditRashi extends Component {
     };
   }
 
-
-    componentDidMount() {
-      let { id } = this.props.match.params;
-      axiosConfig
-        .get(`/admin/viewoneRashiImg/${id}`)
-        .then((response) => {
-          console.log(response);
-          this.setState({
-            rashi:response.data.data.rashi,
-            rashiImg:response.data.data.rashiImg,
-            desc:response.data.data.desc,
-          });
-        })
-        .catch((error) => {
-          console.log(error);
+  componentDidMount() {
+    let { id } = this.props.match.params;
+    axiosConfig
+      .get(`/admin/viewoneRashiImg/${id}`)
+      .then((response) => {
+        console.log(response);
+        this.setState({
+          rashi: response.data.data.rashi,
+          rashiImg: response.data.data.rashiImg,
+          desc: response.data.data.desc,
         });
-
-
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
   changeHandler1 = (e) => {
     this.setState({ status: e.target.value });
@@ -88,7 +82,7 @@ export class EditRashi extends Component {
           <Row className="m-2">
             <Col>
               <h1 col-sm-6 className="float-left">
-                  Edit Rashi
+                Edit Rashi
               </h1>
             </Col>
             <Col>
@@ -105,7 +99,7 @@ export class EditRashi extends Component {
             </Col>
           </Row>
           <CardBody>
-          <Form className="m-1" onSubmit={this.submitHandler}>
+            <Form className="m-1" onSubmit={this.submitHandler}>
               <Row>
                 <Col lg="6" md="6" sm="12" className="mb-2">
                   <Label>Rashi</Label>
@@ -117,8 +111,7 @@ export class EditRashi extends Component {
                     className="form-Control"
                     value={this.state.rashi}
                     onChange={this.changeHandler}
-                  >
-                  </Input>
+                  ></Input>
                 </Col>
                 <Col lg="6" md="6" sm="12" className="mb-2">
                   <Label>Image</Label>
@@ -142,8 +135,6 @@ export class EditRashi extends Component {
                     onChange={this.changeHandler}
                   ></Input>
                 </Col>
-
-
               </Row>
               {/* <Col lg="6" md="6" sm="6" className="mb-2">
                 <Label className="mb-1">Status</Label>

@@ -9,7 +9,6 @@ import {
   CustomInput,
   Label,
   Button,
-  FormGroup,
 } from "reactstrap";
 import { history } from "../../../history";
 import axiosConfig from "../../../axiosConfig";

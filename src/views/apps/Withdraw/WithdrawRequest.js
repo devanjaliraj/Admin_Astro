@@ -7,7 +7,6 @@ import {
   Col,
   Button,
   UncontrolledDropdown,
-  UncontrolledButtonDropdown,
   DropdownMenu,
   DropdownItem,
   DropdownToggle,

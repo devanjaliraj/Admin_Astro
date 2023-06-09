@@ -39,6 +39,7 @@ class AddTermsCondition extends React.Component {
   };
 
   onEditorStateChange = (editorState) => {
+    console.log(editorState);
     this.setState({
       editorState,
       desc: draftToHtml(convertToRaw(editorState.getCurrentContent())),
@@ -52,7 +53,10 @@ class AddTermsCondition extends React.Component {
       .then((response) => {
         console.log(response.data.data.desc);
         this.setState({
-          desc: response.data.data.desc,
+          // desc: response.data.data.desc,
+          desc: draftToHtml(
+            convertToRaw(response.data.data.desc.getCurrentContent())
+          ),
         });
       })
       .catch((error) => {
@@ -110,6 +114,7 @@ class AddTermsCondition extends React.Component {
               <Editor
                 wrapperClassName="demo-wrapper"
                 editorClassName="demo-editor"
+                value={this.state.desc}
                 onEditorStateChange={this.onEditorStateChange}
                 toolbar={{
                   inline: { inDropdown: true },

@@ -247,6 +247,7 @@ const ViewHoroscopes = lazy(() =>
 
 const UserChatList = lazy(() => import("./views/apps/chat/UserChatList"));
 const ChatList = lazy(() => import("./views/apps/chat/ChatList"));
+const Chathistory = lazy(() => import("./views/apps/chat/Chatpage"));
 
 const AstrologerProduct = lazy(() =>
   import("./views/apps/productmanager/AstrologerProduct")
@@ -730,6 +731,11 @@ class AppRouter extends React.Component {
             {/* Start Horoscopes*/}
             <AppRoute path="/app/chat/chatList" component={ChatList} />
             <AppRoute
+              path="/app/chat/Chathistory"
+              component={Chathistory}
+              fullLayout
+            />
+            <AppRoute
               path="/app/horoscopecategory/horoscopeCategoryList"
               component={HoroscopeCategoryList}
             />
@@ -875,6 +881,14 @@ class AppRouter extends React.Component {
               path="/app/poojapackage/packageList"
               component={PackageList}
             />
+            <AppRoute
+              path="/app/poojapackage/editPackage/:id"
+              component={EditPackage}
+            />
+            {/* <AppRoute
+              path="/app/poojapackage/editPackage/:id"
+              component={EditPackage}
+            /> */}
             <AppRoute
               path="/app/poojapackage/addPackage"
               component={AddPackage}

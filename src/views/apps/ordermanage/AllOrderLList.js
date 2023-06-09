@@ -54,7 +54,7 @@ class AllOrderList extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.userid?.fullname}</span>
+              <span>{params.data?.userid?.fullname}</span>
             </div>
           );
         },
@@ -68,7 +68,7 @@ class AllOrderList extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.userid?.email}</span>
+              <span>{params.data?.userid?.email}</span>
             </div>
           );
         },
@@ -81,7 +81,7 @@ class AllOrderList extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.userid?.mobile}</span>
+              <span>{params.data?.userid?.mobile}</span>
             </div>
           );
         },
@@ -95,7 +95,7 @@ class AllOrderList extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data?.product.product.productname}</span>
+              <span>{params.data?.product?.product?.productname}</span>
             </div>
           );
         },
@@ -123,7 +123,7 @@ class AllOrderList extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.orderId}</span>
+              <span>{params?.data?.orderId}</span>
             </div>
           );
         },
@@ -136,7 +136,7 @@ class AllOrderList extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.date}</span>
+              <span>{params?.data?.date}</span>
             </div>
           );
         },
@@ -149,7 +149,7 @@ class AllOrderList extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.status}</span>
+              <span>{params?.data?.status}</span>
             </div>
           );
         },

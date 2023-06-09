@@ -8,7 +8,6 @@ import {
   Input,
   Label,
   Button,
-  FormGroup,
 } from "reactstrap";
 //import axios from "axios";
 import axiosConfig from "../../../axiosConfig";
@@ -18,7 +17,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { Route } from "react-router-dom";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 
-import { data } from "jquery";
 import swal from "sweetalert";
 export class EditPrediction extends Component {
   constructor(props) {

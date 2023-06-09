@@ -17,12 +17,11 @@ import axiosConfig from "../../../axiosConfig";
 import "react-toastify/dist/ReactToastify.css";
 import { Route } from "react-router-dom";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
-import { EditorState } from "draft-js"
-import { data } from "jquery";
+import { EditorState } from "draft-js";
 import swal from "sweetalert";
-import { Editor } from "react-draft-wysiwyg"
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css"
-import "../../../assets/scss/plugins/extensions/editor.scss"
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import "../../../assets/scss/plugins/extensions/editor.scss";
 
 export class EditRashiHoro extends Component {
   constructor(props) {
@@ -34,16 +33,15 @@ export class EditRashiHoro extends Component {
     };
   }
 
-
   state = {
-    editorState: EditorState.createEmpty()
-  }
+    editorState: EditorState.createEmpty(),
+  };
 
-  onEditorStateChange = editorState => {
+  onEditorStateChange = (editorState) => {
     this.setState({
-      editorState
-    })
-  }
+      editorState,
+    });
+  };
 
   changeHandler1 = (e) => {
     this.setState({ status: e.target.value });
@@ -80,7 +78,7 @@ export class EditRashiHoro extends Component {
           <Row className="m-2">
             <Col>
               <h1 col-sm-6 className="float-left">
-                  Edit Horoscope
+                Edit Horoscope
               </h1>
             </Col>
             <Col>
@@ -108,8 +106,7 @@ export class EditRashiHoro extends Component {
                     placeholder="Enter Title"
                     value={this.state.title}
                     onChange={this.changeHandler}
-                  >
-                  </Input>
+                  ></Input>
                 </Col>
                 <Col lg="6" md="6" sm="12" className="mb-2">
                   <Label>Rashi</Label>
@@ -124,21 +121,22 @@ export class EditRashiHoro extends Component {
                 </Col>
                 <Col lg="12" md="12" sm="12" className="mb-2">
                   <Label>Short Description</Label>
-                   <Editor
+                  <Editor
                     // editorState={editorState}
                     wrapperClassName="demo-wrapper"
                     editorClassName="demo-editor"
                     onEditorStateChange={this.onEditorStateChange}
-                    />                </Col>
+                  />{" "}
+                </Col>
 
                 <Col lg="12" md="12" sm="12" className="mb-2">
-                  <Label>Long  Description</Label>
-                    <Editor
-                      // editorState={editorState}
+                  <Label>Long Description</Label>
+                  <Editor
+                    // editorState={editorState}
                     wrapperClassName="demo-wrapper"
                     editorClassName="demo-editor"
                     onEditorStateChange={this.onEditorStateChange}
-                    />
+                  />
                 </Col>
               </Row>
               {/* <Col lg="6" md="6" sm="6" className="mb-2">

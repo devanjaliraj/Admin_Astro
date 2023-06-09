@@ -1,21 +1,17 @@
 import React, { Component } from "react";
 import {
   Card,
-  CardHeader,
-  CardTitle,
   CardBody,
   Row,
   Col,
   Form,
   Label,
   Input,
-  CustomInput,
   Button,
   Breadcrumb,
   BreadcrumbItem,
 } from "reactstrap";
 import axiosConfig from "../../../../axiosConfig";
-import { history } from "../../../../history";
 import swal from "sweetalert";
 import { Route } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";

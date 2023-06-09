@@ -174,7 +174,7 @@ class BannerList extends React.Component {
 
   async componentDidMount() {
     await axiosConfig
-      .get("admin/getbanner", {
+      .get("/admin/getbanner", {
         // headers: {
         //   "auth-adtoken": localStorage.getItem("auth-adtoken"),
         // },

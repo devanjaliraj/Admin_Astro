@@ -249,7 +249,7 @@ class AdminEarning extends React.Component {
                 <Row className="m-2">
                   <Col>
                     <h1 sm="6" className="float-left">
-                        Admin Earning
+                      Admin Earning
                     </h1>
                   </Col>
                   <Col>

@@ -1,22 +1,12 @@
 import React from "react";
-import {
-  Card,
-  CardBody,
-  Row,
-  Col,
-  Button,
-  Media,
-  Breadcrumb,
-  BreadcrumbItem,
-} from "reactstrap";
-import { history } from "../../../history";
+import { Card, CardBody, Row, Col, Button } from "reactstrap";
+// import { history } from "../../../history";
 import "../../../assets/scss/pages/app-ecommerce-shop.scss";
 import "../../../assets/scss/pages/users.scss";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
-import ReactHtmlParser from "react-html-parser";
+// import ReactHtmlParser from "react-html-parser";
 
 import axiosConfig from "../../../axiosConfig";
-import axios from "axios";
 import { Route } from "react-router-dom";
 class CommissionView extends React.Component {
   constructor(props) {

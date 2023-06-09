@@ -19,7 +19,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { Route } from "react-router-dom";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 
-import { data } from "jquery";
 import swal from "sweetalert";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";

@@ -11,7 +11,7 @@ import {
   DropdownItem,
   DropdownToggle,
 } from "reactstrap";
-// import axiosConfig from "../../../axiosConfig";
+import axiosConfig from "../../../axiosConfig";
 import axios from "axios";
 import { ContextLayout } from "../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
@@ -47,22 +47,6 @@ class PackageList extends React.Component {
       },
 
       {
-        headerName: "Thumnail Image",
-        field: "thumnail",
-        filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>
-                {params.data.firstname} {params.data.lastname}
-              </span>
-            </div>
-          );
-        },
-      },
-
-      {
         headerName: "Title",
         field: "title",
         filter: true,
@@ -70,51 +54,57 @@ class PackageList extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>
-                {params.data.firstname} {params.data.lastname}
-              </span>
+              <span>{params.data.title}</span>
             </div>
           );
         },
       },
 
       {
-        headerName: "Description",
-        field: "description	",
+        headerName: "MRP Price",
+        field: "mrp_price",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data.mrp_price}</span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "Offer Price",
+        field: "offer_price	",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.email}</span>
+              <span>{params.data.offer_price}</span>
             </div>
           );
         },
       },
-
       {
-        headerName: "Amount",
-        field: "time",
-        filter: true,
-        width: 200,
+        headerName: "Image",
+        field: "image",
+        filter: false,
+        width: 250,
+        setColumnVisible: false,
         cellRendererFramework: (params) => {
           return (
-            <div>
-              <span>{params.data.mobile}</span>
-            </div>
-          );
-        },
-      },
-
-      {
-        headerName: "Status",
-        field: "dateofregister",
-        filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data.mobile}</span>
+            <div className="d-flex align-items-center cursor-pointer">
+              {params.data.image.map((i) => (
+                <img
+                  className=" rounded-circle  mr-3"
+                  src={i}
+                  alt="user avatar"
+                  height="40"
+                  width="40"
+                />
+              ))}
             </div>
           );
         },
@@ -127,7 +117,7 @@ class PackageList extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
-              <Route
+              {/* <Route
                 render={({ history }) => (
                   <Eye
                     className="mr-50"
@@ -140,14 +130,18 @@ class PackageList extends React.Component {
                     }
                   />
                 )}
-              />
+              /> */}
               <Route
                 render={({ history }) => (
                   <Edit
                     className="mr-50"
                     size="25px"
                     color="blue"
-                    onClick={() => history.push("/app/userride/editUserRide")}
+                    onClick={() =>
+                      history.push(
+                        `/app/poojapackage/editPackage/${params.data._id}`
+                      )
+                    }
                   />
                 )}
               />
@@ -168,28 +162,16 @@ class PackageList extends React.Component {
     ],
   };
   async componentDidMount() {
-    let { id } = this.props.match.params;
-
-    await axios
-      .get(`http://3.108.185.7:4000/user/view_onecust/${id}`)
-      .then((response) => {
-        let rowData = response.data.data;
-        console.log(rowData);
-        this.setState({ rowData });
-      });
-
-    await axios
-      .get("http://3.108.185.7:4000/admin/allcustomer")
-      .then((response) => {
-        let rowData = response.data.data;
-        console.log(rowData);
-        this.setState({ rowData });
-      });
+    await axiosConfig.get("/admin/getPackage").then((response) => {
+      let rowData = response.data.data;
+      console.log(rowData);
+      this.setState({ rowData });
+    });
   }
 
   async runthisfunction(id) {
     console.log(id);
-    await axios.get(`http://3.108.185.7:4000/admin/delcustomer/${id}`).then(
+    await axios.get(`/admin/delcustomer/${id}`).then(
       (response) => {
         console.log(response);
       },

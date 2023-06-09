@@ -18,7 +18,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { Route } from "react-router-dom";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 
-import { data } from "jquery";
 import swal from "sweetalert";
 export class AddPrediction extends Component {
   constructor(props) {

@@ -15,7 +15,6 @@ import swal from "sweetalert";
 import { Route } from "react-router-dom";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 
-
 class AddCommission extends React.Component {
   constructor(props) {
     super(props);
@@ -23,26 +22,13 @@ class AddCommission extends React.Component {
       product: "",
       comision_name: "",
       comision_rate: "",
-      status: ""
-
+      category: "",
+      status: "",
     };
     this.state = {
       categoryList: [],
       productList: [],
     };
-  }
-  componentDidUpdate() {
-
-
-    axiosConfig
-      .get(`/user/productbycategory/${this.state.category}`)
-      .then((response) => {
-        console.log(response.data.data);
-        this.setState({ productList: response.data.data });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   }
 
   componentDidMount() {
@@ -50,14 +36,13 @@ class AddCommission extends React.Component {
     axiosConfig
       .get(`/admin/getproductcalegory`)
       .then((response) => {
-        console.log(response.data.data);
         this.setState({ categoryList: response.data.data });
       })
       .catch((error) => {
         console.log(error);
       });
   }
-
+  componentDidUpdate() {}
   changeHandler1 = (e) => {
     this.setState({ status: e.target.value });
   };
@@ -68,9 +53,8 @@ class AddCommission extends React.Component {
     e.preventDefault();
 
     axiosConfig
-      .post("/admin/add_Comision", this.state)
+      .post(`/admin/add_Comision`, this.state)
       .then((response) => {
-        console.log(response);
         swal("Success!", "Submitted SuccessFull!", "success");
         this.props.history.push("/app/packagemanager/commission");
       })
@@ -78,8 +62,6 @@ class AddCommission extends React.Component {
         console.log(error);
       });
   };
-
-
 
   render() {
     return (
@@ -120,13 +102,20 @@ class AddCommission extends React.Component {
                     required
                     type="select"
                     name="category"
-                    placeholder="Enter Title"
-                    value={this.state.category}
-                    onChange={this.changeHandler}
+                    onChange={(e) => {
+                      axiosConfig
+                        .get(`/user/productbycategory/${e.target.value}`)
+                        .then((response) => {
+                          this.setState({ productList: response.data.data });
+                        })
+                        .catch((error) => {
+                          console.log(error);
+                        });
+                    }}
                   >
                     <option>Select.....</option>
                     {this.state.categoryList?.map((catList) => (
-                      <option key={catList._id} value={catList._id}>
+                      <option key={catList._id} value={catList?._id}>
                         {catList.name}
                       </option>
                     ))}
@@ -145,7 +134,7 @@ class AddCommission extends React.Component {
                     <option>Select.....</option>
                     {this.state.productList?.map((proList) => (
                       <option key={proList._id} value={proList._id}>
-                        {proList.productname}
+                        {proList?.product?.productname}
                       </option>
                     ))}
                   </CustomInput>

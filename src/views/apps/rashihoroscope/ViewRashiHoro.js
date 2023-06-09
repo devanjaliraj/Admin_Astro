@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
   Card,
@@ -15,11 +14,8 @@ import "../../../assets/scss/pages/users.scss";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 
 import axiosConfig from "../../../axiosConfig";
-import axios from "axios";
-
 
 class ViewRashiHoro extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -27,19 +23,17 @@ class ViewRashiHoro extends React.Component {
     };
   }
 
-
   componentDidMount() {
     let { id } = this.props.match.params;
     axiosConfig
       .get(`/user/viewoneuser/${id}`)
 
-      .then(response => {
-
-         //console.log(response.data);
+      .then((response) => {
+        //console.log(response.data);
         console.log(response.data.data);
         this.setState({ data: response.data.data });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error.response);
       });
   }
@@ -48,7 +42,7 @@ class ViewRashiHoro extends React.Component {
     return (
       <React.Fragment>
         <div>
-        <Breadcrumbs
+          <Breadcrumbs
             breadCrumbTitle="Customer"
             breadCrumbParent="Home"
             breadCrumbActive="View Customer "
@@ -61,7 +55,7 @@ class ViewRashiHoro extends React.Component {
                     Home
                   </BreadcrumbItem>
                   <BreadcrumbItem href="/app/userride/userRideList" tag="a">
-                  User List
+                    User List
                   </BreadcrumbItem>
                   <BreadcrumbItem active>View User</BreadcrumbItem>
                 </Breadcrumb>
@@ -78,7 +72,8 @@ class ViewRashiHoro extends React.Component {
               <Col>
                 <Button
                   className=" btn btn-danger float-right"
-                  onClick={() => history.push("/app/user/userList")}>
+                  onClick={() => history.push("/app/user/userList")}
+                >
                   Back
                 </Button>
               </Col>
@@ -86,8 +81,8 @@ class ViewRashiHoro extends React.Component {
             <CardBody className="pb-0">
               <Row className="ml-4">
                 <Col sm="9" md="12" lg="12">
-                <div className="users-page-view-table">
-                {/* <div className="d-flex user-info">
+                  <div className="users-page-view-table">
+                    {/* <div className="d-flex user-info">
                     <div className="user-info-title font-weight-bold">
                     Customer Id
                     </div>
@@ -95,15 +90,15 @@ class ViewRashiHoro extends React.Component {
                       <span>{this.state.data.customerId}</span>
                     </div>
                   </div> */}
-                  <div className="d-flex user-info">
-                    <div className="user-info-title font-weight-bold">
-                       Name
+                    <div className="d-flex user-info">
+                      <div className="user-info-title font-weight-bold">
+                        Name
+                      </div>
+                      <div className="text-truncate">
+                        <span>{this.state.data.fullname}</span>
+                      </div>
                     </div>
-                    <div className="text-truncate">
-                      <span>{this.state.data.fullname}</span>
-                    </div>
-                  </div>
-                  {/* <div className="d-flex user-info">
+                    {/* <div className="d-flex user-info">
                     <div className="user-info-title font-weight-bold">
                       Last Name
                     </div>
@@ -111,22 +106,22 @@ class ViewRashiHoro extends React.Component {
                       <span>{this.state.data.lastname}</span>
                     </div>
                   </div> */}
-                  <div className="d-flex user-info">
-                    <div className="user-info-title font-weight-bold">
-                      Email
+                    <div className="d-flex user-info">
+                      <div className="user-info-title font-weight-bold">
+                        Email
+                      </div>
+                      <div className="text-truncate">
+                        <span>{this.state.data.email}</span>
+                      </div>
                     </div>
-                    <div className="text-truncate">
-                      <span>{this.state.data.email}</span>
+                    <div className="d-flex user-info">
+                      <div className="user-info-title font-weight-bold">
+                        Mobile
+                      </div>
+                      <div className="text-truncate">
+                        <span>{this.state.data.mobile}</span>
+                      </div>
                     </div>
-                  </div>
-                  <div className="d-flex user-info">
-                    <div className="user-info-title font-weight-bold">
-                      Mobile
-                    </div>
-                    <div className="text-truncate">
-                      <span>{this.state.data.mobile}</span>
-                    </div>
-                  </div>
                   </div>
                 </Col>
               </Row>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import {
   Card,
   CardBody,
@@ -10,24 +10,24 @@ import {
   DropdownMenu,
   DropdownItem,
   DropdownToggle,
-} from 'reactstrap'
-import axiosConfig from '../../axiosConfig'
-import axios from 'axios'
-import { ContextLayout } from '../../utility/context/Layout'
-import { AgGridReact } from 'ag-grid-react'
-import { Eye, Edit, Trash2, ExternalLink, ChevronDown } from 'react-feather'
+} from "reactstrap";
+import axiosConfig from "../../axiosConfig";
+import axios from "axios";
+import { ContextLayout } from "../../utility/context/Layout";
+import { AgGridReact } from "ag-grid-react";
+import { Eye, Edit, Trash2, ExternalLink, ChevronDown } from "react-feather";
 //import classnames from "classnames";
-import '../../assets/scss/plugins/tables/_agGridStyleOverride.scss'
-import '../../assets/scss/pages/users.scss'
-import { Route } from 'react-router-dom'
-import Breadcrumbs from '../../components/@vuexy/breadCrumbs/BreadCrumb'
+import "../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
+import "../../assets/scss/pages/users.scss";
+import { Route } from "react-router-dom";
+import Breadcrumbs from "../../components/@vuexy/breadCrumbs/BreadCrumb";
 
 class AskQuestionList extends React.Component {
   state = {
     rowData: [],
     paginationPageSize: 20,
-    currenPageSize: '',
-    getPageSize: '',
+    currenPageSize: "",
+    getPageSize: "",
     defaultColDef: {
       sortable: true,
       editable: true,
@@ -36,9 +36,9 @@ class AskQuestionList extends React.Component {
     },
     columnDefs: [
       {
-        headerName: 'S.No',
-        valueGetter: 'node.rowIndex + 1',
-        field: 'node.rowIndex + 1',
+        headerName: "S.No",
+        valueGetter: "node.rowIndex + 1",
+        field: "node.rowIndex + 1",
         width: 100,
         filter: true,
         // checkboxSelection: true,
@@ -47,8 +47,8 @@ class AskQuestionList extends React.Component {
       },
 
       {
-        headerName: 'Name',
-        field: 'fullname',
+        headerName: "Name",
+        field: "fullname",
         filter: true,
         width: 120,
         cellRendererFramework: (params) => {
@@ -56,13 +56,13 @@ class AskQuestionList extends React.Component {
             <div>
               <span>{params.data.userid?.fullname}</span>
             </div>
-          )
+          );
         },
       },
 
       {
-        headerName: 'Mobile No.',
-        field: 'mobile',
+        headerName: "Mobile No.",
+        field: "mobile",
         filter: true,
         width: 120,
         cellRendererFramework: (params) => {
@@ -70,12 +70,12 @@ class AskQuestionList extends React.Component {
             <div className="d-flex align-items-center cursor-pointer">
               <span>{params.data.userid?.mobile}</span>
             </div>
-          )
+          );
         },
       },
       {
-        headerName: 'DOB',
-        field: 'dob',
+        headerName: "DOB",
+        field: "dob",
         filter: true,
         width: 100,
         cellRendererFramework: (params) => {
@@ -83,13 +83,13 @@ class AskQuestionList extends React.Component {
             <div className="d-flex align-items-center cursor-pointer">
               <span>{params.data.userid?.dob}</span>
             </div>
-          )
+          );
         },
       },
 
       {
-        headerName: 'User Question',
-        field: 'question',
+        headerName: "User Question",
+        field: "question",
         filter: true,
         width: 150,
         cellRendererFramework: (params) => {
@@ -97,12 +97,12 @@ class AskQuestionList extends React.Component {
             <div className="d-flex align-items-center cursor-pointer">
               <span>{params.data.question}</span>
             </div>
-          )
+          );
         },
       },
       {
-        headerName: 'Answer For Question',
-        field: 'answer',
+        headerName: "Answer For Question",
+        field: "answer",
         filter: true,
         width: 150,
         cellRendererFramework: (params) => {
@@ -110,7 +110,7 @@ class AskQuestionList extends React.Component {
             <div>
               <span>{params.data.answer}</span>
             </div>
-          )
+          );
         },
       },
 
@@ -129,8 +129,8 @@ class AskQuestionList extends React.Component {
       //   },
 
       {
-        headerName: 'Actions',
-        field: 'sortorder',
+        headerName: "Actions",
+        field: "sortorder",
         width: 100,
         cellRendererFramework: (params) => {
           return (
@@ -168,63 +168,63 @@ class AskQuestionList extends React.Component {
                 size="25px"
                 color="red"
                 onClick={() => {
-                  let selectedData = this.gridApi.getSelectedRows()
-                  this.runthisfunction(params.data._id)
-                  this.gridApi.updateRowData({ remove: selectedData })
+                  let selectedData = this.gridApi.getSelectedRows();
+                  this.runthisfunction(params.data._id);
+                  this.gridApi.updateRowData({ remove: selectedData });
                 }}
               />
             </div>
-          )
+          );
         },
       },
     ],
-  }
+  };
   async componentDidMount() {
-    let { astroid } = this.props.match.params
+    let { astroid } = this.props.match.params;
 
     await axiosConfig
       .get(`/user/astro_ques_list/${astroid}`)
       .then((response) => {
-        let rowData = response?.data?.data
-        console.log(rowData)
-        this.setState({ rowData })
-      })
+        let rowData = response?.data?.data;
+        console.log(rowData);
+        this.setState({ rowData });
+      });
   }
 
   async runthisfunction(id) {
-    console.log(id)
+    console.log(id);
     await axiosConfig.get(`/user/dlt_ask_qus/${id}`).then(
       (response) => {
-        console.log(response)
+        console.log(response);
       },
       (error) => {
-        console.log(error)
-      },
-    )
+        console.log(error);
+      }
+    );
   }
   onGridReady = (params) => {
-    this.gridApi = params.api
-    this.gridColumnApi = params.columnApi
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
     this.setState({
       currenPageSize: this.gridApi.paginationGetCurrentPage() + 1,
       getPageSize: this.gridApi.paginationGetPageSize(),
       totalPages: this.gridApi.paginationGetTotalPages(),
-    })
-  }
+    });
+  };
   updateSearchQuery = (val) => {
-    this.gridApi.setQuickFilter(val)
-  }
+    this.gridApi.setQuickFilter(val);
+  };
   filterSize = (val) => {
     if (this.gridApi) {
-      this.gridApi.paginationSetPageSize(Number(val))
+      this.gridApi.paginationSetPageSize(Number(val));
       this.setState({
         currenPageSize: val,
         getPageSize: val,
-      })
+      });
     }
-  }
+  };
   render() {
-    const { rowData, columnDefs, defaultColDef } = this.state
+    const { rowData, columnDefs, defaultColDef } = this.state;
     return (
       console.log(rowData),
       (
@@ -269,16 +269,16 @@ class AskQuestionList extends React.Component {
                             <DropdownToggle tag="div">
                               {this.gridApi
                                 ? this.state.currenPageSize
-                                : '' * this.state.getPageSize -
-                                  (this.state.getPageSize - 1)}{' '}
-                              -{' '}
+                                : "" * this.state.getPageSize -
+                                  (this.state.getPageSize - 1)}{" "}
+                              -{" "}
                               {this.state.rowData.length -
                                 this.state.currenPageSize *
                                   this.state.getPageSize >
                               0
                                 ? this.state.currenPageSize *
                                   this.state.getPageSize
-                                : this.state.rowData.length}{' '}
+                                : this.state.rowData.length}{" "}
                               of {this.state.rowData.length}
                               <ChevronDown className="ml-50" size={15} />
                             </DropdownToggle>
@@ -339,13 +339,13 @@ class AskQuestionList extends React.Component {
                             columnDefs={columnDefs}
                             rowData={rowData}
                             onGridReady={this.onGridReady}
-                            colResizeDefault={'shift'}
+                            colResizeDefault={"shift"}
                             animateRows={true}
                             floatingFilter={false}
                             pagination={true}
                             paginationPageSize={this.state.paginationPageSize}
                             pivotPanelShow="always"
-                            enableRtl={context.state.direction === 'rtl'}
+                            enableRtl={context.state.direction === "rtl"}
                           />
                         )}
                       </ContextLayout.Consumer>
@@ -357,7 +357,7 @@ class AskQuestionList extends React.Component {
           </Row>
         </div>
       )
-    )
+    );
   }
 }
-export default AskQuestionList
+export default AskQuestionList;

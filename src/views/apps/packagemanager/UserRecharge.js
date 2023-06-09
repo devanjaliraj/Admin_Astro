@@ -12,14 +12,12 @@ import {
   DropdownToggle,
 } from "reactstrap";
 import axiosConfig from "../../../axiosConfig";
-import axios from "axios";
 import { ContextLayout } from "../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
-import { Eye, Edit, Trash2, ChevronDown } from "react-feather";
+import { Trash2, ChevronDown } from "react-feather";
 //import classnames from "classnames";
 import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 import "../../../assets/scss/pages/users.scss";
-import { Route } from "react-router-dom";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 
 class UserRecharge extends React.Component {
@@ -158,23 +156,23 @@ class UserRecharge extends React.Component {
         },
       },
 
-    //   {
-    //     headerName: "Status",
-    //     field: "status",
-    //     // filter: true,
-    //     width: 130,
-    //     cellRendererFramework: (params) => {
-    //       return params.value === "Active" ? (
-    //         <div className="badge badge-pill badge-success">
-    //           {params.data.planid?.status}
-    //         </div>
-    //       ) : params.value === "Deactive" ? (
-    //         <div className="badge badge-pill badge-warning">
-    //           {params.data.planid?.status}
-    //         </div>
-    //       ) : null;
-    //     },
-    //   },
+      //   {
+      //     headerName: "Status",
+      //     field: "status",
+      //     // filter: true,
+      //     width: 130,
+      //     cellRendererFramework: (params) => {
+      //       return params.value === "Active" ? (
+      //         <div className="badge badge-pill badge-success">
+      //           {params.data.planid?.status}
+      //         </div>
+      //       ) : params.value === "Deactive" ? (
+      //         <div className="badge badge-pill badge-warning">
+      //           {params.data.planid?.status}
+      //         </div>
+      //       ) : null;
+      //     },
+      //   },
 
       {
         headerName: "Action",

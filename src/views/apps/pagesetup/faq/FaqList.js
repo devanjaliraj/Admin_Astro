@@ -136,17 +136,11 @@ class FaqList extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig
-      .get("admin/faq_list", {
-        // headers: {
-        //   "auth-adtoken": localStorage.getItem("auth-adtoken"),
-        // },
-      })
-      .then((response) => {
-        const rowData = response.data.data;
-        console.log(rowData);
-        this.setState({ rowData });
-      });
+    await axiosConfig.get("/admin/faq_list", {}).then((response) => {
+      const rowData = response.data.data;
+      console.log(rowData);
+      this.setState({ rowData });
+    });
   }
   async runthisfunction(id) {
     console.log(id);

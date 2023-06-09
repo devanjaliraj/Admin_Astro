@@ -9,13 +9,11 @@ import {
   Form,
   Label,
   Input,
-  CustomInput,
   Button,
   Breadcrumb,
   BreadcrumbItem,
 } from "reactstrap";
 import axiosConfig from "../../../../axiosConfig";
-import { history } from "../../../../history";
 import swal from "sweetalert";
 import { Route } from "react-router-dom";
 

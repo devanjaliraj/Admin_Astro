@@ -1,25 +1,22 @@
 import React, { Component } from "react";
 import {
   Card,
-  CardHeader,
-  CardTitle,
   CardBody,
   Row,
   Col,
   Form,
   Label,
   Input,
-  CustomInput,
   Button,
   Breadcrumb,
   BreadcrumbItem,
 } from "reactstrap";
 import axiosConfig from "../../../../axiosConfig";
-import { history } from "../../../../history";
+// import { history } from "../../../../history";
 import swal from "sweetalert";
 import { Route } from "react-router-dom";
 
-export default class AddStartUp extends Component {
+export default class EditBanner extends Component {
   constructor(props) {
     super(props);
     this.state = {

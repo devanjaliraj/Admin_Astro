@@ -14,7 +14,7 @@ import {
 import axiosConfig from "../../../../axiosConfig";
 import { ContextLayout } from "../../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
-import { Eye, Edit, Trash2, ChevronDown } from "react-feather";
+import { Trash2, ChevronDown } from "react-feather";
 //import classnames from "classnames";
 import { history } from "../../../../history";
 import ReactHtmlParser from "react-html-parser";
@@ -135,7 +135,7 @@ class NotifiList extends React.Component {
 
   async componentDidMount() {
     await axiosConfig
-      .get("admin/get_notification", {
+      .get(`/admin/admin_notification`, {
         // headers: {
         //   "auth-adtoken": localStorage.getItem("auth-adtoken"),
         // },

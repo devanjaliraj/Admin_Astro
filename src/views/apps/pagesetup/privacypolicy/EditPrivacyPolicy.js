@@ -9,7 +9,6 @@ import {
   Form,
   Label,
   Input,
-  CustomInput,
   Button,
   Breadcrumb,
   BreadcrumbItem,
@@ -21,7 +20,6 @@ import draftToHtml from "draftjs-to-html";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "../../../../assets/scss/plugins/extensions/editor.scss";
 // import axiosConfig from "../../../../axiosConfig";
-import { history } from "../../../../history";
 import swal from "sweetalert";
 import { Route } from "react-router-dom";
 

@@ -19,7 +19,6 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { EditorState, convertToRaw } from "draft-js";
 import "../../../../assets/scss/plugins/extensions/editor.scss";
 import draftToHtml from "draftjs-to-html";
-import { data } from "jquery";
 import swal from "sweetalert";
 export class AddRashi extends Component {
   constructor(props) {
